@@ -284,13 +284,23 @@
 
         /* Memories / Scrapbook Section */
         #memories {
-            background: #f4efe6;
-            background-image:
-                radial-gradient(circle at 15% 25%, rgba(255,200,150,0.2) 0%, transparent 50%),
-                radial-gradient(circle at 85% 75%, rgba(200,180,220,0.2) 0%, transparent 50%);
+            background: url('assets/images/beach.png') center/cover no-repeat fixed;
             min-height: auto;
             display: block;
             padding: 5rem 2rem;
+            position: relative;
+        }
+
+        #memories::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(255, 248, 235, 0.55);
+        }
+
+        #memories .scrapbook-container {
+            position: relative;
+            z-index: 1;
         }
 
         .scrapbook-container {
