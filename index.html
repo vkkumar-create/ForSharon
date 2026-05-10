@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy Birthday Sharon! 🎉</title>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -281,25 +282,125 @@
             font-size: 1rem;
         }
 
-        /* Memories Section */
+        /* Memories / Scrapbook Section */
         #memories {
-            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            background: #f4efe6;
+            background-image:
+                radial-gradient(circle at 15% 25%, rgba(255,200,150,0.2) 0%, transparent 50%),
+                radial-gradient(circle at 85% 75%, rgba(200,180,220,0.2) 0%, transparent 50%);
+            min-height: auto;
+            display: block;
+            padding: 5rem 2rem;
         }
 
-        .memories-content {
-            max-width: 800px;
+        .scrapbook-container {
+            max-width: 1100px;
             margin: 0 auto;
-            background: white;
-            padding: 3rem;
-            border-radius: 15px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
-            line-height: 2;
-            color: #333;
         }
 
-        .memories-content p {
-            margin-bottom: 1.5rem;
-            font-size: 1.1rem;
+        .scrapbook-title {
+            font-family: 'Caveat', cursive;
+            font-size: 3.5rem;
+            color: #2c2c2c;
+            text-align: center;
+            margin-bottom: 3.5rem;
+            letter-spacing: 1px;
+        }
+
+        .scrapbook-board {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2.5rem;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .scrapbook-card {
+            background: #fff;
+            padding: 0.8rem 0.8rem 3.2rem;
+            box-shadow: 3px 3px 10px rgba(0,0,0,0.15), 0 1px 3px rgba(0,0,0,0.08);
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            z-index: 1;
+        }
+
+        .scrapbook-card:hover {
+            transform: rotate(0deg) scale(1.06) !important;
+            box-shadow: 8px 12px 30px rgba(0,0,0,0.25);
+            z-index: 20;
+        }
+
+        .scrapbook-card.size-sm { width: 200px; }
+        .scrapbook-card.size-md { width: 250px; }
+        .scrapbook-card.size-lg { width: 300px; }
+
+        .photo-slot {
+            width: 100%;
+            height: 190px;
+            overflow: hidden;
+            background: #ddd6ca;
+        }
+
+        .scrapbook-card.size-lg .photo-slot { height: 230px; }
+
+        .photo-slot img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Tape strip */
+        .scrapbook-card::before {
+            content: '';
+            position: absolute;
+            top: -14px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70px;
+            height: 26px;
+            background: rgba(255, 230, 80, 0.55);
+            border-radius: 2px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+
+        .scrapbook-caption {
+            font-family: 'Caveat', cursive;
+            font-size: 1.25rem;
+            color: #333;
+            text-align: center;
+            line-height: 1.4;
+            position: absolute;
+            bottom: 0.6rem;
+            left: 0.5rem;
+            right: 0.5rem;
+        }
+
+        /* Card rotations */
+        .r-n3 { transform: rotate(-3deg); }
+        .r-n2 { transform: rotate(-2deg); }
+        .r-n1 { transform: rotate(-1.5deg); }
+        .r-p1 { transform: rotate(1.5deg); }
+        .r-p2 { transform: rotate(2.5deg); }
+        .r-p4 { transform: rotate(4deg); }
+
+        .scrapbook-footer {
+            font-family: 'Caveat', cursive;
+            font-size: 2.2rem;
+            text-align: center;
+            color: #c0392b;
+            margin-top: 3.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .scrapbook-card.size-sm,
+            .scrapbook-card.size-md,
+            .scrapbook-card.size-lg {
+                width: 80vw;
+                max-width: 300px;
+            }
+            .scrapbook-title { font-size: 2.5rem; }
         }
 
         /* Music Player */
@@ -478,20 +579,49 @@
 
     <!-- Memories Section -->
     <section id="memories">
-        <div class="memories-content">
-            <h2 class="section-title" style="color: #333;">🌟 Our Story</h2>
-            <p>
-                From the moment we met, I knew you were someone special. Every moment with you is a treasure, and I'm so grateful for all the laughs, the late-night talks, and the quiet moments we've shared.
-            </p>
-            <p>
-                You've brought so much color into my life, and I can't wait to create countless more memories with you. This year, and every year after, belongs to celebrating you—celebrating your strength, your beauty, and your incredible spirit.
-            </p>
-            <p>
-                So here's to you, Sharon. Happy birthday! You deserve the world, and I'm here to give you just that.
-            </p>
-            <p style="text-align: center; font-size: 1.5rem; margin-top: 3rem;">
-                ❤️ Forever yours ❤️
-            </p>
+        <div class="scrapbook-container">
+            <h2 class="scrapbook-title">🌟 Our Story</h2>
+
+            <div class="scrapbook-board">
+
+                <div class="scrapbook-card size-md r-n3">
+                    <div class="photo-slot">
+                        <img src="assets/memories/memory1.jpg" alt="Memory 1">
+                    </div>
+                    <p class="scrapbook-caption">Caption for photo 1!</p>
+                </div>
+
+                <div class="scrapbook-card size-lg r-p2">
+                    <div class="photo-slot">
+                        <img src="assets/memories/memory2.jpg" alt="Memory 2">
+                    </div>
+                    <p class="scrapbook-caption">Caption for photo 2!</p>
+                </div>
+
+                <div class="scrapbook-card size-sm r-n2">
+                    <div class="photo-slot">
+                        <img src="assets/memories/memory3.jpg" alt="Memory 3">
+                    </div>
+                    <p class="scrapbook-caption">Caption for photo 3!</p>
+                </div>
+
+                <div class="scrapbook-card size-md r-p4">
+                    <div class="photo-slot">
+                        <img src="assets/memories/memory4.jpg" alt="Memory 4">
+                    </div>
+                    <p class="scrapbook-caption">Caption for photo 4!</p>
+                </div>
+
+                <div class="scrapbook-card size-lg r-n1">
+                    <div class="photo-slot">
+                        <img src="assets/memories/memory5.jpg" alt="Memory 5">
+                    </div>
+                    <p class="scrapbook-caption">Caption for photo 5!</p>
+                </div>
+
+            </div>
+
+            <p class="scrapbook-footer">❤️ Forever yours ❤️</p>
         </div>
     </section>
 
