@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy Birthday Sharon! 🎉</title>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Special+Elite&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -341,18 +341,19 @@
             z-index: 20;
         }
 
-        .scrapbook-card.size-sm { width: 200px; }
-        .scrapbook-card.size-md { width: 250px; }
-        .scrapbook-card.size-lg { width: 300px; }
+        .scrapbook-card.size-sm { width: 260px; }
+        .scrapbook-card.size-md { width: 320px; }
+        .scrapbook-card.size-lg { width: 380px; }
 
         .photo-slot {
             width: 100%;
-            height: 190px;
+            height: 240px;
             overflow: hidden;
             background: #ddd6ca;
         }
 
-        .scrapbook-card.size-lg .photo-slot { height: 230px; }
+        .scrapbook-card.size-md .photo-slot { height: 270px; }
+        .scrapbook-card.size-lg .photo-slot { height: 310px; }
 
         .photo-slot img {
             width: 100%;
@@ -361,7 +362,7 @@
             display: block;
         }
 
-        /* Tape strip */
+        /* Tape strip on photo cards */
         .scrapbook-card::before {
             content: '';
             position: absolute;
@@ -377,14 +378,61 @@
 
         .scrapbook-caption {
             font-family: 'Caveat', cursive;
-            font-size: 1.25rem;
+            font-size: 1.3rem;
             color: #333;
             text-align: center;
             line-height: 1.4;
             position: absolute;
-            bottom: 0.6rem;
+            bottom: 0.7rem;
             left: 0.5rem;
             right: 0.5rem;
+        }
+
+        /* Text box cards */
+        .scrapbook-textbox {
+            background: #f5e6c8;
+            background-image: repeating-linear-gradient(
+                transparent,
+                transparent 27px,
+                rgba(100, 80, 60, 0.12) 27px,
+                rgba(100, 80, 60, 0.12) 28px
+            );
+            background-position: 0 34px;
+            padding: 1.8rem 1.5rem 1.5rem;
+            box-shadow: 3px 3px 10px rgba(0,0,0,0.15), 0 1px 3px rgba(0,0,0,0.08);
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            z-index: 1;
+            width: 280px;
+            min-height: 220px;
+        }
+
+        .scrapbook-textbox:hover {
+            transform: rotate(0deg) scale(1.04) !important;
+            box-shadow: 8px 12px 30px rgba(0,0,0,0.2);
+            z-index: 20;
+        }
+
+        /* Tape strip on text boxes */
+        .scrapbook-textbox::before {
+            content: '';
+            position: absolute;
+            top: -14px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70px;
+            height: 26px;
+            background: rgba(255, 230, 80, 0.55);
+            border-radius: 2px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        }
+
+        .scrapbook-textbox p {
+            font-family: 'Special Elite', cursive;
+            font-size: 0.95rem;
+            color: #3a2a1a;
+            line-height: 1.9;
+            margin: 0;
         }
 
         /* Card rotations */
@@ -393,6 +441,7 @@
         .r-n1 { transform: rotate(-1.5deg); }
         .r-p1 { transform: rotate(1.5deg); }
         .r-p2 { transform: rotate(2.5deg); }
+        .r-p3 { transform: rotate(3deg); }
         .r-p4 { transform: rotate(4deg); }
 
         .scrapbook-footer {
@@ -406,9 +455,10 @@
         @media (max-width: 768px) {
             .scrapbook-card.size-sm,
             .scrapbook-card.size-md,
-            .scrapbook-card.size-lg {
-                width: 80vw;
-                max-width: 300px;
+            .scrapbook-card.size-lg,
+            .scrapbook-textbox {
+                width: 85vw;
+                max-width: 360px;
             }
             .scrapbook-title { font-size: 2.5rem; }
         }
@@ -594,39 +644,54 @@
 
             <div class="scrapbook-board">
 
-                <div class="scrapbook-card size-md r-n3">
+                <div class="scrapbook-card size-lg r-n3">
                     <div class="photo-slot">
                         <img src="assets/memories/memory1.jpg" alt="Memory 1">
                     </div>
                     <p class="scrapbook-caption">Caption for photo 1!</p>
                 </div>
 
-                <div class="scrapbook-card size-lg r-p2">
+                <div class="scrapbook-textbox r-p2">
+                    <p>Write your first note here. Something sweet about Sharon — a favourite memory, a moment that made you laugh, or just how much she means to you.</p>
+                </div>
+
+                <div class="scrapbook-card size-md r-n2">
                     <div class="photo-slot">
                         <img src="assets/memories/memory2.jpg" alt="Memory 2">
                     </div>
                     <p class="scrapbook-caption">Caption for photo 2!</p>
                 </div>
 
-                <div class="scrapbook-card size-sm r-n2">
+                <div class="scrapbook-card size-sm r-p4">
                     <div class="photo-slot">
                         <img src="assets/memories/memory3.jpg" alt="Memory 3">
                     </div>
                     <p class="scrapbook-caption">Caption for photo 3!</p>
                 </div>
 
-                <div class="scrapbook-card size-md r-p4">
+                <div class="scrapbook-card size-lg r-n1">
                     <div class="photo-slot">
                         <img src="assets/memories/memory4.jpg" alt="Memory 4">
                     </div>
                     <p class="scrapbook-caption">Caption for photo 4!</p>
                 </div>
 
-                <div class="scrapbook-card size-lg r-n1">
+                <div class="scrapbook-textbox r-n3">
+                    <p>Write your second note here. Maybe a funny inside joke, or a little reminder of why you love her so much.</p>
+                </div>
+
+                <div class="scrapbook-card size-md r-p1">
                     <div class="photo-slot">
                         <img src="assets/memories/memory5.jpg" alt="Memory 5">
                     </div>
                     <p class="scrapbook-caption">Caption for photo 5!</p>
+                </div>
+
+                <div class="scrapbook-card size-sm r-p3">
+                    <div class="photo-slot">
+                        <img src="assets/memories/memory6.jpg" alt="Memory 6">
+                    </div>
+                    <p class="scrapbook-caption">Caption for photo 6!</p>
                 </div>
 
             </div>
