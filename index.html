@@ -318,11 +318,14 @@
         }
 
         .scrapbook-board {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 2.5rem;
-            justify-content: center;
-            align-items: flex-start;
+            position: relative;
+            height: 1100px;
+            max-width: 1050px;
+            margin: 0 auto;
+        }
+
+        .scrapbook-board > * {
+            position: absolute;
         }
 
         .scrapbook-card {
@@ -453,6 +456,17 @@
         }
 
         @media (max-width: 768px) {
+            .scrapbook-board {
+                height: auto;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 3rem;
+                padding-bottom: 2rem;
+            }
+            .scrapbook-board > * {
+                position: static !important;
+            }
             .scrapbook-card.size-sm,
             .scrapbook-card.size-md,
             .scrapbook-card.size-lg,
@@ -644,50 +658,53 @@
 
             <div class="scrapbook-board">
 
-                <div class="scrapbook-card size-lg r-n3">
+                <!-- Row 1 -->
+                <div class="scrapbook-card size-lg r-n3" style="top:50px; left:10px; z-index:2;">
                     <div class="photo-slot">
                         <img src="assets/memories/memory1.jpg" alt="Memory 1">
                     </div>
                     <p class="scrapbook-caption">Caption for photo 1!</p>
                 </div>
 
-                <div class="scrapbook-textbox r-p2">
+                <div class="scrapbook-textbox r-p2" style="top:20px; left:355px; z-index:3;">
                     <p>Write your first note here. Something sweet about Sharon — a favourite memory, a moment that made you laugh, or just how much she means to you.</p>
                 </div>
 
-                <div class="scrapbook-card size-md r-n2">
+                <div class="scrapbook-card size-md r-n2" style="top:35px; left:595px; z-index:2;">
                     <div class="photo-slot">
                         <img src="assets/memories/memory2.jpg" alt="Memory 2">
                     </div>
                     <p class="scrapbook-caption">Caption for photo 2!</p>
                 </div>
 
-                <div class="scrapbook-card size-sm r-p4">
+                <!-- Row 2 -->
+                <div class="scrapbook-card size-sm r-p4" style="top:375px; left:5px; z-index:2;">
                     <div class="photo-slot">
                         <img src="assets/memories/memory3.jpg" alt="Memory 3">
                     </div>
                     <p class="scrapbook-caption">Caption for photo 3!</p>
                 </div>
 
-                <div class="scrapbook-card size-lg r-n1">
+                <div class="scrapbook-card size-lg r-n1" style="top:330px; left:230px; z-index:4;">
                     <div class="photo-slot">
                         <img src="assets/memories/memory4.jpg" alt="Memory 4">
                     </div>
                     <p class="scrapbook-caption">Caption for photo 4!</p>
                 </div>
 
-                <div class="scrapbook-textbox r-n3">
+                <div class="scrapbook-textbox r-n3" style="top:350px; left:720px; z-index:3;">
                     <p>Write your second note here. Maybe a funny inside joke, or a little reminder of why you love her so much.</p>
                 </div>
 
-                <div class="scrapbook-card size-md r-p1">
+                <!-- Row 3 -->
+                <div class="scrapbook-card size-md r-p2" style="top:680px; left:50px; z-index:3;">
                     <div class="photo-slot">
                         <img src="assets/memories/memory5.jpg" alt="Memory 5">
                     </div>
                     <p class="scrapbook-caption">Caption for photo 5!</p>
                 </div>
 
-                <div class="scrapbook-card size-sm r-p3">
+                <div class="scrapbook-card size-md r-n2" style="top:700px; left:390px; z-index:2;">
                     <div class="photo-slot">
                         <img src="assets/memories/memory6.jpg" alt="Memory 6">
                     </div>
