@@ -619,6 +619,119 @@
             }
         }
 
+        /* Personality Cards Section */
+        #personalities {
+            background: linear-gradient(135deg, #0d0d1a 0%, #1a0a2e 60%, #0d0d1a 100%);
+        }
+
+        .personality-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        .personality-scene {
+            width: 320px;
+            height: 450px;
+            perspective: 1400px;
+            margin: 2rem auto 3rem;
+        }
+
+        .personality-inner {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .personality-card {
+            position: absolute;
+            width: 300px;
+            height: 430px;
+            left: 10px;
+            top: 0;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 25px 70px rgba(0,0,0,0.7);
+            transform: rotateY(calc(var(--i) * 40deg)) translateZ(520px);
+            transition: box-shadow 0.4s;
+        }
+
+        .personality-card:nth-child(1) { --i: 0; }
+        .personality-card:nth-child(2) { --i: 1; }
+        .personality-card:nth-child(3) { --i: 2; }
+        .personality-card:nth-child(4) { --i: 3; }
+        .personality-card:nth-child(5) { --i: 4; }
+        .personality-card:nth-child(6) { --i: 5; }
+        .personality-card:nth-child(7) { --i: 6; }
+        .personality-card:nth-child(8) { --i: 7; }
+        .personality-card:nth-child(9) { --i: 8; }
+
+        .personality-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .personality-controls {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+            margin-top: 1rem;
+        }
+
+        .personality-btn {
+            background: rgba(255,255,255,0.1);
+            border: 2px solid rgba(255,255,255,0.3);
+            color: white;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .personality-btn:hover {
+            background: rgba(255,255,255,0.25);
+            transform: scale(1.1);
+        }
+
+        .personality-dots {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .personality-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.25);
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .personality-dot.active {
+            background: white;
+        }
+
+        @media (max-width: 768px) {
+            .personality-scene {
+                width: 85vw;
+                max-width: 320px;
+            }
+            .personality-card {
+                width: calc(85vw - 20px);
+                max-width: 300px;
+            }
+        }
+
         /* Audio element */
         audio {
             display: none;
@@ -633,6 +746,7 @@
     <nav>
         <a href="#hero">Home</a>
         <a href="#gallery">Photos</a>
+        <a href="#personalities">Sharon's Modes</a>
         <a href="#messages">Messages</a>
         <a href="#memories">Memories</a>
     </nav>
@@ -699,6 +813,61 @@
                     <div class="carousel-dot" onclick="goToSlide(5)"></div>
                 </div>
                 <button class="carousel-btn" onclick="spinCarousel(1)">&#8594;</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Personality Cards Section -->
+    <section id="personalities">
+        <div class="personality-wrapper">
+            <h2 class="section-title">✨ Sharon's Many Modes</h2>
+
+            <div class="personality-scene" id="personalityScene">
+                <div class="personality-inner" id="personalityInner">
+                    <div class="personality-card">
+                        <img src="assets/personalities/card1.png" alt="Personality 1">
+                    </div>
+                    <div class="personality-card">
+                        <img src="assets/personalities/card2.png" alt="Personality 2">
+                    </div>
+                    <div class="personality-card">
+                        <img src="assets/personalities/card3.png" alt="Personality 3">
+                    </div>
+                    <div class="personality-card">
+                        <img src="assets/personalities/card4.png" alt="Personality 4">
+                    </div>
+                    <div class="personality-card">
+                        <img src="assets/personalities/card5.png" alt="Personality 5">
+                    </div>
+                    <div class="personality-card">
+                        <img src="assets/personalities/card6.png" alt="Personality 6">
+                    </div>
+                    <div class="personality-card">
+                        <img src="assets/personalities/card7.png" alt="Personality 7">
+                    </div>
+                    <div class="personality-card">
+                        <img src="assets/personalities/card8.png" alt="Personality 8">
+                    </div>
+                    <div class="personality-card">
+                        <img src="assets/personalities/card9.png" alt="Personality 9">
+                    </div>
+                </div>
+            </div>
+
+            <div class="personality-controls">
+                <button class="personality-btn" onclick="spinPersonality(-1)">&#8592;</button>
+                <div class="personality-dots" id="personalityDots">
+                    <div class="personality-dot active" onclick="goToPersonality(0)"></div>
+                    <div class="personality-dot" onclick="goToPersonality(1)"></div>
+                    <div class="personality-dot" onclick="goToPersonality(2)"></div>
+                    <div class="personality-dot" onclick="goToPersonality(3)"></div>
+                    <div class="personality-dot" onclick="goToPersonality(4)"></div>
+                    <div class="personality-dot" onclick="goToPersonality(5)"></div>
+                    <div class="personality-dot" onclick="goToPersonality(6)"></div>
+                    <div class="personality-dot" onclick="goToPersonality(7)"></div>
+                    <div class="personality-dot" onclick="goToPersonality(8)"></div>
+                </div>
+                <button class="personality-btn" onclick="spinPersonality(1)">&#8594;</button>
             </div>
         </div>
     </section>
@@ -840,6 +1009,41 @@
         function stopAutoSpin() {
             clearInterval(autoSpin);
         }
+
+        // Personality carousel
+        const totalPersonalities = 9;
+        let currentPersonality = 0;
+        let personalityAngle = 0;
+        let autoPersonalitySpin;
+
+        function spinPersonality(direction) {
+            currentPersonality = (currentPersonality - direction + totalPersonalities) % totalPersonalities;
+            personalityAngle += direction * 40;
+            document.getElementById('personalityInner').style.transform = `rotateY(${personalityAngle}deg)`;
+            document.querySelectorAll('.personality-dot').forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentPersonality);
+            });
+        }
+
+        function goToPersonality(index) {
+            const steps = index - currentPersonality;
+            const shortest = ((steps % totalPersonalities) + totalPersonalities + 4) % totalPersonalities - 4;
+            personalityAngle -= shortest * 40;
+            currentPersonality = index;
+            document.getElementById('personalityInner').style.transform = `rotateY(${personalityAngle}deg)`;
+            document.querySelectorAll('.personality-dot').forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentPersonality);
+            });
+        }
+
+        function startPersonalitySpin() {
+            autoPersonalitySpin = setInterval(() => spinPersonality(1), 3500);
+        }
+
+        const pScene = document.getElementById('personalityScene');
+        pScene.addEventListener('mouseenter', () => clearInterval(autoPersonalitySpin));
+        pScene.addEventListener('mouseleave', startPersonalitySpin);
+        startPersonalitySpin();
 
         const scene = document.getElementById('carouselScene');
         scene.addEventListener('mouseenter', stopAutoSpin);
