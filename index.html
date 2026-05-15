@@ -53,19 +53,21 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
             text-align: center;
             color: white;
             position: relative;
             overflow: hidden;
-            background: #0d0820;
-            background-image:
-                radial-gradient(ellipse at 20% 30%, rgba(130, 60, 200, 0.22) 0%, transparent 48%),
-                radial-gradient(ellipse at 80% 65%, rgba(90, 40, 160, 0.2) 0%, transparent 48%),
-                radial-gradient(ellipse at 55% 15%, rgba(160, 80, 220, 0.12) 0%, transparent 40%),
-                radial-gradient(ellipse at 40% 90%, rgba(100, 50, 180, 0.1) 0%, transparent 35%);
-            padding: 5rem 1rem 3rem;
+            padding: 4rem 1rem 3rem;
             gap: 1.5rem;
+            background-color: #2a1d44;
+            background-image:
+                radial-gradient(ellipse at 0% 0%, rgba(12, 6, 22, 0.85) 0%, transparent 55%),
+                radial-gradient(ellipse at 100% 100%, rgba(12, 6, 22, 0.85) 0%, transparent 55%),
+                radial-gradient(ellipse at 28% 35%, rgba(150, 100, 210, 0.18) 0%, transparent 50%),
+                radial-gradient(ellipse at 72% 65%, rgba(110, 70, 180, 0.14) 0%, transparent 50%),
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='1' seed='3'/%3E%3CfeColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.16 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E"),
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='700' height='700'%3E%3Cfilter id='r'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.016' numOctaves='4' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.42  0 0 0 0 0.25  0 0 0 0 0.58  0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23r)'/%3E%3C/svg%3E"),
+                linear-gradient(135deg, #1a0f2e 0%, #2d1f44 35%, #4a3370 60%, #2a1d44 100%);
         }
 
         .hero::before { display: none; }
@@ -75,16 +77,18 @@
             text-align: center;
             z-index: 5;
             line-height: 1.1;
+            margin-bottom: 0.5rem;
         }
 
         .bday-top-line {
             font-family: 'Cormorant Garamond', serif;
             font-size: clamp(1.6rem, 4.5vw, 3.5rem);
             font-weight: 300;
-            color: rgba(255, 255, 255, 0.88);
+            color: rgba(255, 255, 255, 0.92);
             letter-spacing: 0.45em;
             text-transform: uppercase;
             display: block;
+            text-shadow: 0 2px 20px rgba(0,0,0,0.5);
         }
 
         .bday-name-line {
@@ -94,27 +98,27 @@
             font-style: italic;
             color: #f4d03f;
             letter-spacing: 0.12em;
-            text-shadow: 0 0 50px rgba(212, 175, 55, 0.35);
+            text-shadow: 0 0 50px rgba(212, 175, 55, 0.4), 0 2px 20px rgba(0,0,0,0.5);
             display: block;
             margin-top: 0.2rem;
         }
 
-        /* Scatter zone */
-        .photos-scatter {
+        /* Scatter canvas — holds both boxes and photos */
+        .hero-canvas {
             position: relative;
             width: 100%;
-            min-height: 220px;
             flex: 1;
+            min-height: 520px;
             z-index: 5;
-            pointer-events: none;
         }
 
+        /* Revealed photo card (sticker style) */
         .photo-card {
             position: absolute;
             background: white;
             padding: 5px 5px 5px 5px;
             border-radius: 6px;
-            box-shadow: 0 12px 35px rgba(0,0,0,0.55);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.6);
             z-index: 20;
             opacity: 0;
             transform: scale(0) rotate(var(--rot, 0deg));
@@ -134,119 +138,136 @@
             border-radius: 3px;
         }
 
-        /* Boxes grid */
-        .boxes-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1.2rem;
-            justify-content: center;
-            max-width: 560px;
-            z-index: 5;
-        }
-
-        .mini-gift-box {
-            position: relative;
-            width: 76px;
-            height: 84px;
+        /* Gift Box — scattered, slate body with copper ribbon */
+        .scatter-box {
+            position: absolute;
+            width: 82px;
+            height: 90px;
             cursor: pointer;
-            transition: transform 0.2s;
-            filter: drop-shadow(0 8px 12px rgba(212, 175, 55, 0.18));
+            transition: transform 0.25s ease;
+            filter: drop-shadow(0 14px 22px rgba(0,0,0,0.45));
+            transform-origin: center bottom;
         }
 
-        .mini-gift-box:hover:not(.opened) { transform: scale(1.1) translateY(-4px); }
+        .scatter-box:hover:not(.opened) {
+            transform: translate(-50%, -50%) scale(calc(var(--s, 1) * 1.08)) rotate(var(--r, 0deg)) translateY(-4px) !important;
+        }
 
-        .mini-lid {
+        .box-base-lid {
             position: absolute;
             top: 9px;
             left: -4px;
-            width: 84px;
-            height: 24px;
-            background: linear-gradient(180deg, #1e1e1e, #141414);
-            border: 1px solid rgba(212, 175, 55, 0.55);
+            width: 90px;
+            height: 26px;
+            background:
+                linear-gradient(180deg, #4a4f5e 0%, #2e323f 100%);
             border-radius: 3px;
+            border: 1px solid rgba(255,255,255,0.06);
+            box-shadow:
+                inset 0 1px 0 rgba(255,255,255,0.08),
+                0 2px 4px rgba(0,0,0,0.4);
             z-index: 2;
             transition: transform 0.65s cubic-bezier(0.68, -0.55, 0.27, 1.55), opacity 0.4s;
         }
 
-        .mini-lid-ribbon {
-            position: absolute;
-            left: 50%;
-            top: 0;
-            transform: translateX(-50%);
-            width: 9px;
-            height: 100%;
-            background: linear-gradient(90deg, #7a5500, #d4af37, #f4d03f, #d4af37, #7a5500);
-        }
-
-        .mini-body {
+        .box-base-body {
             position: absolute;
             bottom: 0;
             left: 0;
-            width: 76px;
-            height: 59px;
-            background: linear-gradient(180deg, #161616, #0c0c0c);
-            border: 1px solid rgba(212, 175, 55, 0.4);
+            width: 82px;
+            height: 64px;
+            background:
+                linear-gradient(180deg, #3d4150 0%, #252834 100%);
             border-radius: 3px;
+            border: 1px solid rgba(255,255,255,0.05);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
         }
 
-        .mini-body-ribbon {
+        /* Copper ribbon */
+        .ribbon-vert {
             position: absolute;
             left: 50%;
             top: 0;
             transform: translateX(-50%);
-            width: 9px;
+            width: 11px;
             height: 100%;
-            background: linear-gradient(90deg, #7a5500, #d4af37, #f4d03f, #d4af37, #7a5500);
-            opacity: 0.75;
+            background:
+                linear-gradient(90deg, #6b2f0c 0%, #c8702f 35%, #f0a060 50%, #c8702f 65%, #6b2f0c 100%);
+            box-shadow: inset 0 0 6px rgba(0,0,0,0.2);
         }
 
-        .mini-bow {
+        /* Bow */
+        .scatter-bow {
             position: absolute;
-            top: -11px;
+            top: -16px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 3;
-            width: 38px;
-            height: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            width: 60px;
+            height: 32px;
             transition: transform 0.65s cubic-bezier(0.68, -0.55, 0.27, 1.55), opacity 0.4s;
         }
 
-        .bow-l {
+        .bow-loop {
             position: absolute;
-            width: 15px;
-            height: 11px;
-            background: linear-gradient(135deg, #c9a227, #f4d03f, #9a7200);
-            border-radius: 50% 0 50% 50%;
+            top: 1px;
+            width: 26px;
+            height: 22px;
+            background:
+                radial-gradient(ellipse at 35% 50%, rgba(255,210,150,0.45) 0%, transparent 55%),
+                linear-gradient(135deg, #e89048 0%, #c66633 50%, #7a3a10 100%);
+            box-shadow:
+                inset -2px -2px 5px rgba(0,0,0,0.35),
+                0 2px 6px rgba(0,0,0,0.4);
+        }
+
+        .bow-loop-l {
             left: 0;
-            top: 3px;
-            transform: rotate(-8deg);
+            border-radius: 60% 30% 50% 35%;
+            transform: rotate(-14deg);
         }
 
-        .bow-r {
-            position: absolute;
-            width: 15px;
-            height: 11px;
-            background: linear-gradient(135deg, #c9a227, #f4d03f, #9a7200);
-            border-radius: 0 50% 50% 50%;
+        .bow-loop-r {
             right: 0;
-            top: 3px;
-            transform: rotate(8deg);
+            border-radius: 30% 60% 35% 50%;
+            transform: rotate(14deg);
         }
 
-        .bow-c {
-            position: relative;
-            z-index: 1;
-            width: 9px;
-            height: 9px;
-            background: radial-gradient(circle, #f4d03f, #c9a227);
-            border-radius: 50%;
+        .bow-knot {
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 11px;
+            height: 18px;
+            background: linear-gradient(135deg, #c66633 0%, #7a3a10 100%);
+            border-radius: 2px;
+            z-index: 2;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,200,150,0.2);
+        }
+
+        .bow-tail {
+            position: absolute;
+            top: 24px;
+            width: 8px;
+            height: 12px;
+            background: linear-gradient(180deg, #c66633 0%, #7a3a10 100%);
+        }
+
+        .bow-tail-l {
+            left: 22px;
+            transform: rotate(-12deg);
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 65% 70%, 0 100%);
+        }
+
+        .bow-tail-r {
+            right: 22px;
+            transform: rotate(12deg);
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 35% 70%, 0 100%);
         }
 
         .explore-hint {
-            color: rgba(255, 255, 255, 0.4);
+            color: rgba(255, 255, 255, 0.5);
             font-size: 0.72rem;
             letter-spacing: 0.3rem;
             text-transform: uppercase;
@@ -923,9 +944,7 @@
             <span class="bday-name-line">Sharon</span>
         </div>
 
-        <div class="photos-scatter" id="photosScatter"></div>
-
-        <div class="boxes-grid" id="boxesGrid"></div>
+        <div class="hero-canvas" id="heroCanvas"></div>
 
         <a href="#gallery" class="explore-hint" id="exploreHint" style="opacity:0">scroll to explore ↓</a>
 
@@ -1173,7 +1192,7 @@
             clearInterval(autoSpin);
         }
 
-        // Hero gift boxes
+        // Hero gift boxes — scattered naturally across the canvas
         const revealPhotoSrcs = [
             'assets/photos/photo1.jpg',
             'assets/photos/photo2.jpeg',
@@ -1187,36 +1206,64 @@
             'assets/photos/photo10.png',
         ];
 
+        // Natural scatter positions for boxes
+        const boxLayout = [
+            { left: '12%', top: '58%', scale: 1.0,  rot: -6 },
+            { left: '30%', top: '45%', scale: 0.9,  rot: 8 },
+            { left: '48%', top: '60%', scale: 1.05, rot: -3 },
+            { left: '68%', top: '50%', scale: 0.95, rot: 5 },
+            { left: '86%', top: '62%', scale: 0.88, rot: -8 },
+            { left: '20%', top: '82%', scale: 1.0,  rot: 7 },
+            { left: '40%', top: '88%', scale: 0.92, rot: -5 },
+            { left: '58%', top: '85%', scale: 1.0,  rot: 3 },
+            { left: '76%', top: '82%', scale: 0.95, rot: -7 },
+            { left: '8%',  top: '88%', scale: 0.85, rot: 6 },
+        ];
+
+        // Photo reveal positions — scattered in upper portion of canvas
         const photoFloatPositions = [
-            { left: '2%',  top: '15%', rot: -12 },
-            { left: '13%', top: '5%',  rot: 8 },
-            { left: '25%', top: '18%', rot: -6 },
-            { left: '37%', top: '4%',  rot: 14 },
-            { left: '49%', top: '16%', rot: -9 },
-            { left: '60%', top: '5%',  rot: 11 },
-            { left: '71%', top: '18%', rot: -13 },
-            { left: '82%', top: '6%',  rot: 7 },
-            { left: '8%',  top: '55%', rot: 9 },
-            { left: '76%', top: '55%', rot: -8 },
+            { left: '6%',  top: '5%',  rot: -10 },
+            { left: '22%', top: '18%', rot: 7 },
+            { left: '40%', top: '8%',  rot: -4 },
+            { left: '58%', top: '20%', rot: 11 },
+            { left: '76%', top: '10%', rot: -8 },
+            { left: '12%', top: '32%', rot: 5 },
+            { left: '32%', top: '70%', rot: -6 },
+            { left: '54%', top: '38%', rot: 9 },
+            { left: '74%', top: '32%', rot: -5 },
+            { left: '88%', top: '38%', rot: 4 },
         ];
 
         const openedHeroBoxes = new Set();
 
-        (function generateBoxes() {
-            const grid = document.getElementById('boxesGrid');
-            for (let i = 0; i < 10; i++) {
+        (function generateScatterBoxes() {
+            const canvas = document.getElementById('heroCanvas');
+            boxLayout.forEach((pos, i) => {
                 const box = document.createElement('div');
-                box.className = 'mini-gift-box';
+                box.className = 'scatter-box';
                 box.id = `mbox${i}`;
+                box.style.left = pos.left;
+                box.style.top = pos.top;
+                box.style.setProperty('--s', pos.scale);
+                box.style.setProperty('--r', pos.rot + 'deg');
+                box.style.transform = `translate(-50%, -50%) scale(${pos.scale}) rotate(${pos.rot}deg)`;
                 box.onclick = () => revealHeroPhoto(i);
                 box.innerHTML = `
-                    <div class="mini-bow" id="mbow${i}">
-                        <div class="bow-l"></div><div class="bow-r"></div><div class="bow-c"></div>
+                    <div class="scatter-bow" id="mbow${i}">
+                        <div class="bow-loop bow-loop-l"></div>
+                        <div class="bow-loop bow-loop-r"></div>
+                        <div class="bow-tail bow-tail-l"></div>
+                        <div class="bow-tail bow-tail-r"></div>
+                        <div class="bow-knot"></div>
                     </div>
-                    <div class="mini-lid" id="mlid${i}"><div class="mini-lid-ribbon"></div></div>
-                    <div class="mini-body"><div class="mini-body-ribbon"></div></div>`;
-                grid.appendChild(box);
-            }
+                    <div class="box-base-lid" id="mlid${i}">
+                        <div class="ribbon-vert"></div>
+                    </div>
+                    <div class="box-base-body">
+                        <div class="ribbon-vert"></div>
+                    </div>`;
+                canvas.appendChild(box);
+            });
         })();
 
         function revealHeroPhoto(i) {
@@ -1226,9 +1273,9 @@
 
             const lid = document.getElementById(`mlid${i}`);
             const bow = document.getElementById(`mbow${i}`);
-            lid.style.transform = 'translateY(-75px) rotate(-22deg)';
+            lid.style.transform = 'translateY(-80px) rotate(-25deg)';
             lid.style.opacity = '0';
-            bow.style.transform = 'translateX(-50%) translateY(-85px) rotate(18deg)';
+            bow.style.transform = 'translateX(-50%) translateY(-90px) rotate(20deg)';
             bow.style.opacity = '0';
 
             setTimeout(() => {
@@ -1237,7 +1284,7 @@
                 card.className = 'photo-card';
                 card.style.cssText = `left:${pos.left}; top:${pos.top}; --rot:${pos.rot}deg;`;
                 card.innerHTML = `<img src="${revealPhotoSrcs[i]}" alt="">`;
-                document.getElementById('photosScatter').appendChild(card);
+                document.getElementById('heroCanvas').appendChild(card);
                 requestAnimationFrame(() => requestAnimationFrame(() => card.classList.add('visible')));
 
                 if (openedHeroBoxes.size === 10) {
