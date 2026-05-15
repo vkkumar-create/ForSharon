@@ -112,18 +112,24 @@
             z-index: 5;
         }
 
-        /* Revealed photo cutout (transparent PNG floats above boxes) */
+        /* Revealed photo cutout (flies out of the main box) */
         .photo-card {
             position: absolute;
-            z-index: 20;
+            z-index: 18;
             opacity: 0;
-            transform: scale(0) rotate(var(--rot, 0deg));
-            transition: opacity 0.5s ease, transform 0.65s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform: translate(-50%, -50%) scale(0) rotate(0deg);
+            left: 50%;
+            top: 50%;
+            transition:
+                opacity 0.5s ease,
+                transform 0.85s cubic-bezier(0.34, 1.4, 0.64, 1),
+                left 0.95s cubic-bezier(0.22, 1, 0.36, 1),
+                top 0.95s cubic-bezier(0.22, 1, 0.36, 1);
         }
 
         .photo-card.visible {
             opacity: 1;
-            transform: scale(1) rotate(var(--rot, 0deg));
+            transform: translate(-50%, -50%) scale(1) rotate(var(--rot, 0deg));
         }
 
         .photo-card img {
@@ -136,22 +142,39 @@
                 drop-shadow(0 4px 6px rgba(0,0,0,0.35));
         }
 
-        /* Gift Box — luxury matte-black with SVG-based ribbon */
-        .scatter-box {
+        /* Main premium gift box (centred) */
+        .main-gift-box-wrapper {
             position: absolute;
-            width: 90px;
-            height: 116px;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 15;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .main-gift-box {
+            position: relative;
+            width: 240px;
+            height: 290px;
             cursor: pointer;
-            transition: transform 0.3s ease, filter 0.3s ease;
+            transition: transform 0.25s ease;
+            filter:
+                drop-shadow(0 30px 40px rgba(0,0,0,0.65))
+                drop-shadow(0 12px 18px rgba(0,0,0,0.45));
             transform-origin: center bottom;
-            filter: drop-shadow(0 16px 18px rgba(0,0,0,0.5)) drop-shadow(0 6px 8px rgba(0,0,0,0.35));
         }
 
-        .scatter-box.opened {
-            cursor: default;
+        .main-gift-box:hover {
+            transform: scale(1.03) translateY(-3px);
         }
 
-        .box-body-part {
+        .main-gift-box:active {
+            transform: scale(0.98);
+        }
+
+        .main-box-body-part {
             position: absolute;
             bottom: 0;
             left: 0;
@@ -159,23 +182,74 @@
             height: 65%;
         }
 
-        .box-top-part {
+        .main-box-top-part {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 50%;
             z-index: 2;
-            transition: transform 0.75s cubic-bezier(0.68, -0.55, 0.27, 1.55), opacity 0.5s;
+            transition: transform 0.45s cubic-bezier(0.5, 0, 0.5, 1.4);
             transform-origin: center bottom;
         }
 
-        .scatter-box .box-body-part svg,
-        .scatter-box .box-top-part svg {
+        .main-box-top-part.lifted {
+            transform: translateY(-22px) rotate(-2deg);
+        }
+
+        .main-gift-box svg {
             width: 100%;
             height: 100%;
             display: block;
             overflow: visible;
+        }
+
+        /* Counter / hint */
+        .unwrap-counter {
+            margin-top: 1.5rem;
+            color: rgba(255, 255, 255, 0.75);
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.1rem;
+            font-style: italic;
+            letter-spacing: 0.15em;
+            transition: opacity 0.4s ease;
+        }
+
+        .unwrap-counter .count-num {
+            color: #f4d05a;
+            font-weight: 400;
+            font-size: 1.3rem;
+        }
+
+        /* Completion message */
+        .completion-message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 25;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 1s ease;
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        .completion-message.visible { opacity: 1; }
+
+        .completion-message .line-1 {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            color: rgba(255, 255, 255, 0.9);
+            font-style: italic;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+        }
+
+        .completion-message .line-2 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            color: #f4d05a;
+            text-shadow: 0 0 40px rgba(212, 175, 55, 0.5);
+            letter-spacing: 0.05em;
         }
 
         .explore-hint {
@@ -885,7 +959,17 @@
             <span class="bday-name-line">Sharon</span>
         </div>
 
-        <div class="hero-canvas" id="heroCanvas"></div>
+        <div class="hero-canvas" id="heroCanvas">
+            <div class="main-gift-box-wrapper" id="giftBoxWrapper">
+                <div class="main-gift-box" id="mainGiftBox"></div>
+                <p class="unwrap-counter" id="unwrapCounter">tap to unwrap &nbsp;·&nbsp; <span class="count-num">0</span> / 28</p>
+            </div>
+
+            <div class="completion-message" id="completionMessage">
+                <div class="line-1">all twenty-eight unwrapped</div>
+                <div class="line-2">happy birthday, my love ❤️</div>
+            </div>
+        </div>
 
         <a href="#gallery" class="explore-hint" id="exploreHint" style="opacity:0">scroll to explore ↓</a>
 
@@ -1143,184 +1227,196 @@
             clearInterval(autoSpin);
         }
 
-        // Hero gift boxes — 17 luxury matte-black boxes with photo cutouts
-        const revealPhotoSrcs = [
-            'assets/photos/photo1.png',
-            'assets/photos/photo2.png',
-            'assets/photos/photo3.png',
-            'assets/photos/photo4.png',
-            'assets/photos/photo5.png',
-            'assets/photos/photo6.png',
-            'assets/photos/photo7.png',
-            'assets/photos/photo8.png',
-            'assets/photos/photo9.png',
-            'assets/photos/photo10.png',
-            'assets/photos/photo11.png',
-            'assets/photos/photo12.png',
-            'assets/photos/photo13.png',
-            'assets/photos/photo14.png',
-            'assets/photos/photo15.png',
-            'assets/photos/photo16.png',
-            'assets/photos/photo17.png',
-        ];
+        // Hero — one main premium box, 28 photo cutouts revealed on click
+        const TOTAL_PHOTOS = 28;
+        const revealPhotoSrcs = Array.from({ length: TOTAL_PHOTOS }, (_, i) => `assets/photos/photo${i + 1}.png`);
 
-        // 17 scattered box positions
-        const boxLayout = [
-            { left: '8%',  top: '12%', scale: 0.9,  rot: -7 },
-            { left: '28%', top: '6%',  scale: 1.0,  rot: 5 },
-            { left: '48%', top: '14%', scale: 0.92, rot: -4 },
-            { left: '68%', top: '8%',  scale: 1.05, rot: 6 },
-            { left: '88%', top: '14%', scale: 0.88, rot: -8 },
-            { left: '18%', top: '30%', scale: 0.95, rot: 8 },
-            { left: '38%', top: '34%', scale: 1.0,  rot: -5 },
-            { left: '58%', top: '30%', scale: 0.95, rot: 4 },
-            { left: '78%', top: '34%', scale: 0.9,  rot: -6 },
-            { left: '6%',  top: '46%', scale: 1.0,  rot: 7 },
-            { left: '26%', top: '54%', scale: 0.92, rot: -4 },
-            { left: '48%', top: '58%', scale: 1.0,  rot: 6 },
-            { left: '68%', top: '54%', scale: 1.05, rot: -7 },
-            { left: '88%', top: '52%', scale: 0.9,  rot: 5 },
-            { left: '14%', top: '74%', scale: 0.95, rot: 5 },
-            { left: '40%', top: '82%', scale: 0.9,  rot: -3 },
-            { left: '72%', top: '78%', scale: 1.0,  rot: 4 },
-        ];
-
-        // 17 photo reveal positions
+        // 28 scattered reveal positions around the central box
         const photoFloatPositions = [
-            { left: '6%',  top: '8%',  rot: -10 },
-            { left: '26%', top: '0%',  rot: 7 },
-            { left: '46%', top: '6%',  rot: -4 },
-            { left: '66%', top: '2%',  rot: 11 },
-            { left: '88%', top: '4%',  rot: -8 },
-            { left: '14%', top: '22%', rot: 5 },
-            { left: '36%', top: '26%', rot: -6 },
-            { left: '56%', top: '22%', rot: 9 },
-            { left: '78%', top: '24%', rot: -5 },
-            { left: '4%',  top: '40%', rot: 4 },
-            { left: '24%', top: '46%', rot: -8 },
-            { left: '46%', top: '48%', rot: 6 },
-            { left: '66%', top: '44%', rot: -4 },
-            { left: '86%', top: '42%', rot: 7 },
-            { left: '10%', top: '64%', rot: 6 },
-            { left: '38%', top: '70%', rot: -7 },
-            { left: '68%', top: '66%', rot: 4 },
+            { left: '8%',  top: '8%',  rot: -10 },
+            { left: '22%', top: '4%',  rot: 6 },
+            { left: '38%', top: '8%',  rot: -7 },
+            { left: '52%', top: '3%',  rot: 4 },
+            { left: '66%', top: '6%',  rot: -5 },
+            { left: '80%', top: '4%',  rot: 7 },
+            { left: '93%', top: '10%', rot: -4 },
+            { left: '4%',  top: '24%', rot: 5 },
+            { left: '18%', top: '26%', rot: -8 },
+            { left: '82%', top: '26%', rot: 6 },
+            { left: '96%', top: '28%', rot: -5 },
+            { left: '6%',  top: '46%', rot: 7 },
+            { left: '17%', top: '50%', rot: -4 },
+            { left: '83%', top: '48%', rot: 5 },
+            { left: '94%', top: '46%', rot: -6 },
+            { left: '4%',  top: '66%', rot: 4 },
+            { left: '18%', top: '70%', rot: -6 },
+            { left: '82%', top: '68%', rot: 7 },
+            { left: '96%', top: '66%', rot: -3 },
+            { left: '10%', top: '86%', rot: 8 },
+            { left: '26%', top: '90%', rot: -5 },
+            { left: '42%', top: '94%', rot: 6 },
+            { left: '58%', top: '92%', rot: -4 },
+            { left: '74%', top: '94%', rot: 7 },
+            { left: '90%', top: '88%', rot: -6 },
+            { left: '34%', top: '82%', rot: 5 },
+            { left: '66%', top: '84%', rot: -7 },
+            { left: '50%', top: '80%', rot: 4 },
         ];
 
-        const openedHeroBoxes = new Set();
-
-        function createBoxSVG(i) {
+        function createMainBoxSVG() {
             return `
-                <div class="box-body-part">
-                    <svg viewBox="0 0 100 75" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+                <div class="main-box-body-part">
+                    <svg viewBox="0 0 240 175" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
                         <defs>
-                            <linearGradient id="bb${i}" x1="50%" y1="0%" x2="50%" y2="100%">
-                                <stop offset="0%" stop-color="#2a2a2e"/>
-                                <stop offset="55%" stop-color="#161618"/>
-                                <stop offset="100%" stop-color="#08080a"/>
-                            </linearGradient>
-                            <linearGradient id="rb${i}" x1="0%" y1="0%" x2="100%" y2="0%">
-                                <stop offset="0%" stop-color="#06060a"/>
-                                <stop offset="30%" stop-color="#1c1c20"/>
-                                <stop offset="48%" stop-color="#3e3e46"/>
-                                <stop offset="52%" stop-color="#4a4a52"/>
-                                <stop offset="58%" stop-color="#3a3a42"/>
-                                <stop offset="80%" stop-color="#15151a"/>
+                            <linearGradient id="mbb" x1="50%" y1="0%" x2="50%" y2="100%">
+                                <stop offset="0%" stop-color="#2e2e34"/>
+                                <stop offset="40%" stop-color="#16161a"/>
                                 <stop offset="100%" stop-color="#06060a"/>
                             </linearGradient>
+                            <linearGradient id="mbb-rb" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#04040a"/>
+                                <stop offset="22%" stop-color="#1a1a22"/>
+                                <stop offset="44%" stop-color="#3a3a4a"/>
+                                <stop offset="50%" stop-color="#5a5a68"/>
+                                <stop offset="56%" stop-color="#3a3a4a"/>
+                                <stop offset="78%" stop-color="#1a1a22"/>
+                                <stop offset="100%" stop-color="#04040a"/>
+                            </linearGradient>
                         </defs>
-                        <rect x="0" y="0" width="100" height="75" fill="url(#bb${i})" rx="2"/>
-                        <rect x="0" y="0" width="100" height="2" fill="#000" opacity="0.7"/>
-                        <rect x="0" y="0" width="100" height="1" fill="#3a3a40" opacity="0.5"/>
-                        <rect x="43" y="0" width="14" height="75" fill="url(#rb${i})"/>
-                        <rect x="44" y="0" width="1.5" height="75" fill="#5e5e68" opacity="0.5"/>
+                        <!-- Body -->
+                        <rect x="0" y="0" width="240" height="175" fill="url(#mbb)" rx="3"/>
+                        <!-- Top edge highlight -->
+                        <rect x="0" y="0" width="240" height="2" fill="#4a4a52" opacity="0.5"/>
+                        <!-- Left edge highlight -->
+                        <rect x="0" y="0" width="2" height="175" fill="#3a3a42" opacity="0.4"/>
+                        <!-- Right edge shadow -->
+                        <rect x="238" y="0" width="2" height="175" fill="#000" opacity="0.4"/>
+                        <!-- Bottom edge shadow -->
+                        <rect x="0" y="173" width="240" height="2" fill="#000" opacity="0.45"/>
+                        <!-- Vertical ribbon -->
+                        <rect x="103" y="0" width="34" height="175" fill="url(#mbb-rb)"/>
+                        <!-- Ribbon centre highlight -->
+                        <rect x="105" y="0" width="3" height="175" fill="#74747e" opacity="0.45"/>
                     </svg>
                 </div>
-                <div class="box-top-part" id="mtop${i}">
-                    <svg viewBox="0 0 100 58" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMax meet">
+                <div class="main-box-top-part" id="mainBoxTop">
+                    <svg viewBox="0 0 240 145" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMax meet">
                         <defs>
-                            <linearGradient id="lb${i}" x1="50%" y1="0%" x2="50%" y2="100%">
-                                <stop offset="0%" stop-color="#2f2f33"/>
-                                <stop offset="100%" stop-color="#1a1a1c"/>
+                            <linearGradient id="mbl" x1="50%" y1="0%" x2="50%" y2="100%">
+                                <stop offset="0%" stop-color="#34343a"/>
+                                <stop offset="100%" stop-color="#1a1a1e"/>
                             </linearGradient>
-                            <linearGradient id="rbT${i}" x1="0%" y1="0%" x2="100%" y2="0%">
-                                <stop offset="0%" stop-color="#06060a"/>
-                                <stop offset="30%" stop-color="#1c1c20"/>
-                                <stop offset="48%" stop-color="#3e3e46"/>
-                                <stop offset="52%" stop-color="#4a4a52"/>
-                                <stop offset="58%" stop-color="#3a3a42"/>
-                                <stop offset="80%" stop-color="#15151a"/>
+                            <linearGradient id="mbl-rb" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#04040a"/>
+                                <stop offset="22%" stop-color="#1a1a22"/>
+                                <stop offset="44%" stop-color="#3a3a4a"/>
+                                <stop offset="50%" stop-color="#5a5a68"/>
+                                <stop offset="56%" stop-color="#3a3a4a"/>
+                                <stop offset="78%" stop-color="#1a1a22"/>
+                                <stop offset="100%" stop-color="#04040a"/>
+                            </linearGradient>
+                            <linearGradient id="mbl-rbV" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stop-color="#1a1a22"/>
+                                <stop offset="50%" stop-color="#3a3a4a"/>
                                 <stop offset="100%" stop-color="#06060a"/>
                             </linearGradient>
                         </defs>
-                        <!-- Lid -->
-                        <rect x="0" y="32" width="100" height="22" fill="url(#lb${i})" rx="2"/>
-                        <rect x="0" y="52" width="100" height="2" fill="#000" opacity="0.55"/>
-                        <rect x="0" y="32" width="100" height="1" fill="#48484e" opacity="0.5"/>
+
+                        <!-- Lid (extends slightly wider than body) -->
+                        <rect x="-4" y="95" width="248" height="48" fill="url(#mbl)" rx="3"/>
+                        <rect x="-4" y="95" width="248" height="2" fill="#4e4e56" opacity="0.55"/>
+                        <rect x="-4" y="141" width="248" height="3" fill="#000" opacity="0.7"/>
+                        <rect x="-4" y="95" width="2" height="48" fill="#3a3a42" opacity="0.4"/>
+                        <rect x="242" y="95" width="2" height="48" fill="#000" opacity="0.4"/>
+
                         <!-- Horizontal ribbon on lid -->
-                        <rect x="0" y="38" width="100" height="9" fill="url(#rbT${i})"/>
-                        <rect x="0" y="39" width="100" height="1" fill="#5e5e68" opacity="0.45"/>
-                        <!-- Bow -->
-                        <g transform="translate(50, 28)">
-                            <ellipse cx="-13" cy="2" rx="15" ry="9" fill="url(#rbT${i})" transform="rotate(-13 -13 2)"/>
-                            <ellipse cx="13" cy="2" rx="15" ry="9" fill="url(#rbT${i})" transform="rotate(13 13 2)"/>
-                            <ellipse cx="-15" cy="-1" rx="6" ry="2.2" fill="#62626a" opacity="0.35" transform="rotate(-13 -15 -1)"/>
-                            <ellipse cx="15" cy="-1" rx="6" ry="2.2" fill="#62626a" opacity="0.35" transform="rotate(13 15 -1)"/>
-                            <rect x="-5" y="-5" width="10" height="14" fill="#16161a" rx="1"/>
-                            <rect x="-4" y="-4" width="8" height="2" fill="#3a3a42" opacity="0.6"/>
-                            <path d="M -6,8 L -11,21 L -2,18 Z" fill="url(#rbT${i})"/>
-                            <path d="M 6,8 L 11,21 L 2,18 Z" fill="url(#rbT${i})"/>
+                        <rect x="-4" y="110" width="248" height="20" fill="url(#mbl-rb)"/>
+                        <rect x="-4" y="112" width="248" height="3" fill="#74747e" opacity="0.5"/>
+
+                        <!-- BOW -->
+                        <g transform="translate(120, 80)">
+                            <!-- Loops (back fill) -->
+                            <ellipse cx="-34" cy="0" rx="40" ry="22" fill="url(#mbl-rbV)" transform="rotate(-18 -34 0)"/>
+                            <ellipse cx="34" cy="0" rx="40" ry="22" fill="url(#mbl-rbV)" transform="rotate(18 34 0)"/>
+
+                            <!-- Inner shadow on loops (where they meet knot) -->
+                            <ellipse cx="-26" cy="6" rx="24" ry="6" fill="rgba(0,0,0,0.5)" transform="rotate(-18 -26 6)"/>
+                            <ellipse cx="26" cy="6" rx="24" ry="6" fill="rgba(0,0,0,0.5)" transform="rotate(18 26 6)"/>
+
+                            <!-- Highlights on outer loop -->
+                            <ellipse cx="-44" cy="-7" rx="14" ry="4" fill="#6a6a74" opacity="0.4" transform="rotate(-18 -44 -7)"/>
+                            <ellipse cx="44" cy="-7" rx="14" ry="4" fill="#6a6a74" opacity="0.4" transform="rotate(18 44 -7)"/>
+
+                            <!-- Knot wrapping -->
+                            <rect x="-13" y="-16" width="26" height="36" fill="#14141a" rx="2"/>
+                            <rect x="-12" y="-15" width="24" height="3" fill="#3a3a42" opacity="0.6"/>
+                            <rect x="-12" y="17" width="24" height="2" fill="#000" opacity="0.7"/>
+                            <rect x="-13" y="-16" width="2" height="36" fill="#3a3a42" opacity="0.4"/>
+
+                            <!-- Tail ribbons -->
+                            <path d="M -15,19 L -24,58 L -8,52 Z" fill="url(#mbl-rbV)"/>
+                            <path d="M 15,19 L 24,58 L 8,52 Z" fill="url(#mbl-rbV)"/>
+                            <path d="M -15,19 L -16,38 L -10,36 Z" fill="rgba(0,0,0,0.35)"/>
+                            <path d="M 15,19 L 16,38 L 10,36 Z" fill="rgba(0,0,0,0.35)"/>
                         </g>
                     </svg>
                 </div>`;
         }
 
-        (function generateScatterBoxes() {
-            const canvas = document.getElementById('heroCanvas');
-            boxLayout.forEach((pos, i) => {
-                const box = document.createElement('div');
-                box.className = 'scatter-box';
-                box.id = `mbox${i}`;
-                box.style.left = pos.left;
-                box.style.top = pos.top;
-                box.style.transform = `translate(-50%, -50%) scale(${pos.scale}) rotate(${pos.rot}deg)`;
-                box.addEventListener('mouseenter', () => {
-                    if (!openedHeroBoxes.has(i)) {
-                        box.style.transform = `translate(-50%, -50%) scale(${pos.scale * 1.08}) rotate(${pos.rot}deg) translateY(-4px)`;
-                    }
-                });
-                box.addEventListener('mouseleave', () => {
-                    if (!openedHeroBoxes.has(i)) {
-                        box.style.transform = `translate(-50%, -50%) scale(${pos.scale}) rotate(${pos.rot}deg)`;
-                    }
-                });
-                box.onclick = () => revealHeroPhoto(i);
-                box.innerHTML = createBoxSVG(i);
-                canvas.appendChild(box);
-            });
-        })();
+        // Inject SVG into the main box
+        document.getElementById('mainGiftBox').innerHTML = createMainBoxSVG();
 
-        function revealHeroPhoto(i) {
-            if (openedHeroBoxes.has(i)) return;
-            openedHeroBoxes.add(i);
-            document.getElementById(`mbox${i}`).classList.add('opened');
+        let unwrapCount = 0;
+        let isAnimating = false;
 
-            const top = document.getElementById(`mtop${i}`);
-            top.style.transform = 'translateY(-70px) rotate(-22deg)';
-            top.style.opacity = '0';
+        document.getElementById('mainGiftBox').addEventListener('click', () => {
+            if (isAnimating || unwrapCount >= TOTAL_PHOTOS) return;
+            isAnimating = true;
 
+            const top = document.getElementById('mainBoxTop');
+            top.classList.add('lifted');
+
+            // Spawn the photo just as the lid lifts
+            setTimeout(() => spawnHeroPhoto(unwrapCount), 130);
+
+            // Drop the lid back
             setTimeout(() => {
-                const pos = photoFloatPositions[i];
-                const card = document.createElement('div');
-                card.className = 'photo-card';
-                card.style.cssText = `left:${pos.left}; top:${pos.top}; --rot:${pos.rot}deg;`;
-                card.innerHTML = `<img src="${revealPhotoSrcs[i]}" alt="">`;
-                document.getElementById('heroCanvas').appendChild(card);
-                requestAnimationFrame(() => requestAnimationFrame(() => card.classList.add('visible')));
+                top.classList.remove('lifted');
+                isAnimating = false;
+            }, 380);
 
-                if (openedHeroBoxes.size === 17) {
-                    setTimeout(() => { document.getElementById('exploreHint').style.opacity = '1'; }, 600);
-                }
-            }, 420);
+            unwrapCount++;
+            document.querySelector('#unwrapCounter .count-num').textContent = unwrapCount;
+
+            if (unwrapCount === TOTAL_PHOTOS) {
+                setTimeout(() => {
+                    const wrapper = document.getElementById('giftBoxWrapper');
+                    wrapper.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                    wrapper.style.opacity = '0';
+                    wrapper.style.transform = 'translate(-50%, -50%) scale(0.7)';
+                    setTimeout(() => {
+                        wrapper.style.display = 'none';
+                        document.getElementById('completionMessage').classList.add('visible');
+                        document.getElementById('exploreHint').style.opacity = '1';
+                    }, 800);
+                }, 900);
+            }
+        });
+
+        function spawnHeroPhoto(i) {
+            const pos = photoFloatPositions[i];
+            const card = document.createElement('div');
+            card.className = 'photo-card';
+            card.style.setProperty('--rot', pos.rot + 'deg');
+            card.innerHTML = `<img src="${revealPhotoSrcs[i]}" alt="">`;
+            document.getElementById('heroCanvas').appendChild(card);
+
+            // Photo starts at centre (where box is), then flies to target
+            requestAnimationFrame(() => requestAnimationFrame(() => {
+                card.style.left = pos.left;
+                card.style.top = pos.top;
+                card.classList.add('visible');
+            }));
         }
 
         // Personality carousel
