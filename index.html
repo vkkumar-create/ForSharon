@@ -138,132 +138,46 @@
             border-radius: 3px;
         }
 
-        /* Gift Box — scattered, slate body with copper ribbon */
+        /* Gift Box — luxury matte-black with SVG-based ribbon */
         .scatter-box {
             position: absolute;
-            width: 82px;
-            height: 90px;
-            cursor: pointer;
-            transition: transform 0.25s ease;
-            filter: drop-shadow(0 14px 22px rgba(0,0,0,0.45));
-            transform-origin: center bottom;
-        }
-
-        .scatter-box:hover:not(.opened) {
-            transform: translate(-50%, -50%) scale(calc(var(--s, 1) * 1.08)) rotate(var(--r, 0deg)) translateY(-4px) !important;
-        }
-
-        .box-base-lid {
-            position: absolute;
-            top: 9px;
-            left: -4px;
             width: 90px;
-            height: 26px;
-            background:
-                linear-gradient(180deg, #4a4f5e 0%, #2e323f 100%);
-            border-radius: 3px;
-            border: 1px solid rgba(255,255,255,0.06);
-            box-shadow:
-                inset 0 1px 0 rgba(255,255,255,0.08),
-                0 2px 4px rgba(0,0,0,0.4);
-            z-index: 2;
-            transition: transform 0.65s cubic-bezier(0.68, -0.55, 0.27, 1.55), opacity 0.4s;
+            height: 116px;
+            cursor: pointer;
+            transition: transform 0.3s ease, filter 0.3s ease;
+            transform-origin: center bottom;
+            filter: drop-shadow(0 16px 18px rgba(0,0,0,0.5)) drop-shadow(0 6px 8px rgba(0,0,0,0.35));
         }
 
-        .box-base-body {
+        .scatter-box.opened {
+            cursor: default;
+        }
+
+        .box-body-part {
             position: absolute;
             bottom: 0;
             left: 0;
-            width: 82px;
-            height: 64px;
-            background:
-                linear-gradient(180deg, #3d4150 0%, #252834 100%);
-            border-radius: 3px;
-            border: 1px solid rgba(255,255,255,0.05);
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+            width: 100%;
+            height: 65%;
         }
 
-        /* Copper ribbon */
-        .ribbon-vert {
+        .box-top-part {
             position: absolute;
-            left: 50%;
             top: 0;
-            transform: translateX(-50%);
-            width: 11px;
-            height: 100%;
-            background:
-                linear-gradient(90deg, #6b2f0c 0%, #c8702f 35%, #f0a060 50%, #c8702f 65%, #6b2f0c 100%);
-            box-shadow: inset 0 0 6px rgba(0,0,0,0.2);
-        }
-
-        /* Bow */
-        .scatter-bow {
-            position: absolute;
-            top: -16px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 3;
-            width: 60px;
-            height: 32px;
-            transition: transform 0.65s cubic-bezier(0.68, -0.55, 0.27, 1.55), opacity 0.4s;
-        }
-
-        .bow-loop {
-            position: absolute;
-            top: 1px;
-            width: 26px;
-            height: 22px;
-            background:
-                radial-gradient(ellipse at 35% 50%, rgba(255,210,150,0.45) 0%, transparent 55%),
-                linear-gradient(135deg, #e89048 0%, #c66633 50%, #7a3a10 100%);
-            box-shadow:
-                inset -2px -2px 5px rgba(0,0,0,0.35),
-                0 2px 6px rgba(0,0,0,0.4);
-        }
-
-        .bow-loop-l {
             left: 0;
-            border-radius: 60% 30% 50% 35%;
-            transform: rotate(-14deg);
-        }
-
-        .bow-loop-r {
-            right: 0;
-            border-radius: 30% 60% 35% 50%;
-            transform: rotate(14deg);
-        }
-
-        .bow-knot {
-            position: absolute;
-            top: 8px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 11px;
-            height: 18px;
-            background: linear-gradient(135deg, #c66633 0%, #7a3a10 100%);
-            border-radius: 2px;
+            width: 100%;
+            height: 50%;
             z-index: 2;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,200,150,0.2);
+            transition: transform 0.75s cubic-bezier(0.68, -0.55, 0.27, 1.55), opacity 0.5s;
+            transform-origin: center bottom;
         }
 
-        .bow-tail {
-            position: absolute;
-            top: 24px;
-            width: 8px;
-            height: 12px;
-            background: linear-gradient(180deg, #c66633 0%, #7a3a10 100%);
-        }
-
-        .bow-tail-l {
-            left: 22px;
-            transform: rotate(-12deg);
-            clip-path: polygon(0 0, 100% 0, 100% 100%, 65% 70%, 0 100%);
-        }
-
-        .bow-tail-r {
-            right: 22px;
-            transform: rotate(12deg);
-            clip-path: polygon(0 0, 100% 0, 100% 100%, 35% 70%, 0 100%);
+        .scatter-box .box-body-part svg,
+        .scatter-box .box-top-part svg {
+            width: 100%;
+            height: 100%;
+            display: block;
+            overflow: visible;
         }
 
         .explore-hint {
@@ -1192,7 +1106,7 @@
             clearInterval(autoSpin);
         }
 
-        // Hero gift boxes — scattered naturally across the canvas
+        // Hero gift boxes — 15 luxury matte-black boxes scattered naturally
         const revealPhotoSrcs = [
             'assets/photos/photo1.jpg',
             'assets/photos/photo2.jpeg',
@@ -1204,37 +1118,118 @@
             'assets/photos/photo8.png',
             'assets/photos/photo9.png',
             'assets/photos/photo10.png',
+            'assets/photos/photo11.png',
+            'assets/photos/photo12.png',
+            'assets/photos/photo13.png',
+            'assets/photos/photo14.png',
+            'assets/photos/photo15.png',
         ];
 
-        // Natural scatter positions for boxes
+        // 15 scattered box positions
         const boxLayout = [
-            { left: '12%', top: '58%', scale: 1.0,  rot: -6 },
-            { left: '30%', top: '45%', scale: 0.9,  rot: 8 },
-            { left: '48%', top: '60%', scale: 1.05, rot: -3 },
-            { left: '68%', top: '50%', scale: 0.95, rot: 5 },
-            { left: '86%', top: '62%', scale: 0.88, rot: -8 },
-            { left: '20%', top: '82%', scale: 1.0,  rot: 7 },
-            { left: '40%', top: '88%', scale: 0.92, rot: -5 },
-            { left: '58%', top: '85%', scale: 1.0,  rot: 3 },
-            { left: '76%', top: '82%', scale: 0.95, rot: -7 },
-            { left: '8%',  top: '88%', scale: 0.85, rot: 6 },
+            { left: '10%', top: '14%', scale: 0.9,  rot: -7 },
+            { left: '32%', top: '8%',  scale: 1.0,  rot: 5 },
+            { left: '54%', top: '12%', scale: 0.92, rot: -4 },
+            { left: '76%', top: '6%',  scale: 1.05, rot: 6 },
+            { left: '92%', top: '20%', scale: 0.88, rot: -8 },
+            { left: '20%', top: '32%', scale: 0.95, rot: 8 },
+            { left: '42%', top: '36%', scale: 1.0,  rot: -5 },
+            { left: '64%', top: '32%', scale: 0.95, rot: 4 },
+            { left: '85%', top: '40%', scale: 0.9,  rot: -6 },
+            { left: '8%',  top: '48%', scale: 1.0,  rot: 7 },
+            { left: '28%', top: '58%', scale: 0.92, rot: -4 },
+            { left: '50%', top: '60%', scale: 1.0,  rot: 6 },
+            { left: '72%', top: '56%', scale: 1.05, rot: -7 },
+            { left: '15%', top: '76%', scale: 0.95, rot: 5 },
+            { left: '45%', top: '82%', scale: 0.9,  rot: -3 },
         ];
 
-        // Photo reveal positions — scattered in upper portion of canvas
+        // 15 photo reveal positions
         const photoFloatPositions = [
-            { left: '6%',  top: '5%',  rot: -10 },
-            { left: '22%', top: '18%', rot: 7 },
-            { left: '40%', top: '8%',  rot: -4 },
-            { left: '58%', top: '20%', rot: 11 },
-            { left: '76%', top: '10%', rot: -8 },
-            { left: '12%', top: '32%', rot: 5 },
-            { left: '32%', top: '70%', rot: -6 },
-            { left: '54%', top: '38%', rot: 9 },
-            { left: '74%', top: '32%', rot: -5 },
-            { left: '88%', top: '38%', rot: 4 },
+            { left: '8%',  top: '10%', rot: -10 },
+            { left: '30%', top: '4%',  rot: 7 },
+            { left: '52%', top: '8%',  rot: -4 },
+            { left: '74%', top: '4%',  rot: 11 },
+            { left: '90%', top: '12%', rot: -8 },
+            { left: '18%', top: '28%', rot: 5 },
+            { left: '40%', top: '30%', rot: -6 },
+            { left: '62%', top: '26%', rot: 9 },
+            { left: '83%', top: '34%', rot: -5 },
+            { left: '6%',  top: '42%', rot: 4 },
+            { left: '26%', top: '52%', rot: -8 },
+            { left: '48%', top: '54%', rot: 6 },
+            { left: '70%', top: '50%', rot: -4 },
+            { left: '12%', top: '70%', rot: 7 },
+            { left: '42%', top: '76%', rot: -6 },
         ];
 
         const openedHeroBoxes = new Set();
+
+        function createBoxSVG(i) {
+            return `
+                <div class="box-body-part">
+                    <svg viewBox="0 0 100 75" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+                        <defs>
+                            <linearGradient id="bb${i}" x1="50%" y1="0%" x2="50%" y2="100%">
+                                <stop offset="0%" stop-color="#2a2a2e"/>
+                                <stop offset="55%" stop-color="#161618"/>
+                                <stop offset="100%" stop-color="#08080a"/>
+                            </linearGradient>
+                            <linearGradient id="rb${i}" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#06060a"/>
+                                <stop offset="30%" stop-color="#1c1c20"/>
+                                <stop offset="48%" stop-color="#3e3e46"/>
+                                <stop offset="52%" stop-color="#4a4a52"/>
+                                <stop offset="58%" stop-color="#3a3a42"/>
+                                <stop offset="80%" stop-color="#15151a"/>
+                                <stop offset="100%" stop-color="#06060a"/>
+                            </linearGradient>
+                        </defs>
+                        <rect x="0" y="0" width="100" height="75" fill="url(#bb${i})" rx="2"/>
+                        <rect x="0" y="0" width="100" height="2" fill="#000" opacity="0.7"/>
+                        <rect x="0" y="0" width="100" height="1" fill="#3a3a40" opacity="0.5"/>
+                        <rect x="43" y="0" width="14" height="75" fill="url(#rb${i})"/>
+                        <rect x="44" y="0" width="1.5" height="75" fill="#5e5e68" opacity="0.5"/>
+                    </svg>
+                </div>
+                <div class="box-top-part" id="mtop${i}">
+                    <svg viewBox="0 0 100 58" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMax meet">
+                        <defs>
+                            <linearGradient id="lb${i}" x1="50%" y1="0%" x2="50%" y2="100%">
+                                <stop offset="0%" stop-color="#2f2f33"/>
+                                <stop offset="100%" stop-color="#1a1a1c"/>
+                            </linearGradient>
+                            <linearGradient id="rbT${i}" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#06060a"/>
+                                <stop offset="30%" stop-color="#1c1c20"/>
+                                <stop offset="48%" stop-color="#3e3e46"/>
+                                <stop offset="52%" stop-color="#4a4a52"/>
+                                <stop offset="58%" stop-color="#3a3a42"/>
+                                <stop offset="80%" stop-color="#15151a"/>
+                                <stop offset="100%" stop-color="#06060a"/>
+                            </linearGradient>
+                        </defs>
+                        <!-- Lid -->
+                        <rect x="0" y="32" width="100" height="22" fill="url(#lb${i})" rx="2"/>
+                        <rect x="0" y="52" width="100" height="2" fill="#000" opacity="0.55"/>
+                        <rect x="0" y="32" width="100" height="1" fill="#48484e" opacity="0.5"/>
+                        <!-- Horizontal ribbon on lid -->
+                        <rect x="0" y="38" width="100" height="9" fill="url(#rbT${i})"/>
+                        <rect x="0" y="39" width="100" height="1" fill="#5e5e68" opacity="0.45"/>
+                        <!-- Bow -->
+                        <g transform="translate(50, 28)">
+                            <ellipse cx="-13" cy="2" rx="15" ry="9" fill="url(#rbT${i})" transform="rotate(-13 -13 2)"/>
+                            <ellipse cx="13" cy="2" rx="15" ry="9" fill="url(#rbT${i})" transform="rotate(13 13 2)"/>
+                            <ellipse cx="-15" cy="-1" rx="6" ry="2.2" fill="#62626a" opacity="0.35" transform="rotate(-13 -15 -1)"/>
+                            <ellipse cx="15" cy="-1" rx="6" ry="2.2" fill="#62626a" opacity="0.35" transform="rotate(13 15 -1)"/>
+                            <rect x="-5" y="-5" width="10" height="14" fill="#16161a" rx="1"/>
+                            <rect x="-4" y="-4" width="8" height="2" fill="#3a3a42" opacity="0.6"/>
+                            <path d="M -6,8 L -11,21 L -2,18 Z" fill="url(#rbT${i})"/>
+                            <path d="M 6,8 L 11,21 L 2,18 Z" fill="url(#rbT${i})"/>
+                        </g>
+                    </svg>
+                </div>`;
+        }
 
         (function generateScatterBoxes() {
             const canvas = document.getElementById('heroCanvas');
@@ -1244,24 +1239,19 @@
                 box.id = `mbox${i}`;
                 box.style.left = pos.left;
                 box.style.top = pos.top;
-                box.style.setProperty('--s', pos.scale);
-                box.style.setProperty('--r', pos.rot + 'deg');
                 box.style.transform = `translate(-50%, -50%) scale(${pos.scale}) rotate(${pos.rot}deg)`;
+                box.addEventListener('mouseenter', () => {
+                    if (!openedHeroBoxes.has(i)) {
+                        box.style.transform = `translate(-50%, -50%) scale(${pos.scale * 1.08}) rotate(${pos.rot}deg) translateY(-4px)`;
+                    }
+                });
+                box.addEventListener('mouseleave', () => {
+                    if (!openedHeroBoxes.has(i)) {
+                        box.style.transform = `translate(-50%, -50%) scale(${pos.scale}) rotate(${pos.rot}deg)`;
+                    }
+                });
                 box.onclick = () => revealHeroPhoto(i);
-                box.innerHTML = `
-                    <div class="scatter-bow" id="mbow${i}">
-                        <div class="bow-loop bow-loop-l"></div>
-                        <div class="bow-loop bow-loop-r"></div>
-                        <div class="bow-tail bow-tail-l"></div>
-                        <div class="bow-tail bow-tail-r"></div>
-                        <div class="bow-knot"></div>
-                    </div>
-                    <div class="box-base-lid" id="mlid${i}">
-                        <div class="ribbon-vert"></div>
-                    </div>
-                    <div class="box-base-body">
-                        <div class="ribbon-vert"></div>
-                    </div>`;
+                box.innerHTML = createBoxSVG(i);
                 canvas.appendChild(box);
             });
         })();
@@ -1271,12 +1261,9 @@
             openedHeroBoxes.add(i);
             document.getElementById(`mbox${i}`).classList.add('opened');
 
-            const lid = document.getElementById(`mlid${i}`);
-            const bow = document.getElementById(`mbow${i}`);
-            lid.style.transform = 'translateY(-80px) rotate(-25deg)';
-            lid.style.opacity = '0';
-            bow.style.transform = 'translateX(-50%) translateY(-90px) rotate(20deg)';
-            bow.style.opacity = '0';
+            const top = document.getElementById(`mtop${i}`);
+            top.style.transform = 'translateY(-70px) rotate(-22deg)';
+            top.style.opacity = '0';
 
             setTimeout(() => {
                 const pos = photoFloatPositions[i];
@@ -1287,10 +1274,10 @@
                 document.getElementById('heroCanvas').appendChild(card);
                 requestAnimationFrame(() => requestAnimationFrame(() => card.classList.add('visible')));
 
-                if (openedHeroBoxes.size === 10) {
+                if (openedHeroBoxes.size === 15) {
                     setTimeout(() => { document.getElementById('exploreHint').style.opacity = '1'; }, 600);
                 }
-            }, 380);
+            }, 420);
         }
 
         // Personality carousel
