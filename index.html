@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy Birthday Sharon! 🎉</title>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Special+Elite&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Special+Elite&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -533,6 +533,217 @@
             .scrapbook-title { font-size: 2.5rem; }
         }
 
+        /* Premium Hero */
+        #hero {
+            background: #060606;
+            background-image:
+                radial-gradient(ellipse at 50% 65%, rgba(180, 140, 40, 0.13) 0%, transparent 55%),
+                radial-gradient(ellipse at 25% 25%, rgba(255,255,255,0.02) 0%, transparent 40%),
+                radial-gradient(ellipse at 75% 75%, rgba(180, 100, 60, 0.06) 0%, transparent 40%);
+        }
+
+        #hero::before { display: none; }
+
+        .hero-gift-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.8rem;
+            position: relative;
+            z-index: 5;
+            transition: opacity 0.5s;
+        }
+
+        .gift-box-outer {
+            position: relative;
+            width: 180px;
+            height: 200px;
+            cursor: pointer;
+            transition: transform 0.3s;
+            filter: drop-shadow(0 20px 50px rgba(212, 175, 55, 0.25));
+        }
+
+        .gift-box-outer:hover { transform: scale(1.04) translateY(-5px); }
+
+        .box-lid {
+            position: absolute;
+            top: 18px;
+            left: -9px;
+            width: 198px;
+            height: 52px;
+            background: linear-gradient(180deg, #1d1d1d 0%, #131313 100%);
+            border: 1px solid rgba(212, 175, 55, 0.55);
+            border-radius: 5px;
+            box-shadow: 0 -4px 20px rgba(212, 175, 55, 0.15);
+            z-index: 2;
+        }
+
+        .lid-ribbon {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            transform: translateX(-50%);
+            width: 22px;
+            height: 100%;
+            background: linear-gradient(90deg, #8a6200, #d4af37, #f4d03f, #d4af37, #8a6200);
+            opacity: 0.9;
+        }
+
+        .box-body {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 180px;
+            height: 148px;
+            background: linear-gradient(180deg, #161616 0%, #0c0c0c 100%);
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            border-radius: 5px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.7), inset 0 1px 0 rgba(255,255,255,0.04);
+        }
+
+        .body-ribbon {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            transform: translateX(-50%);
+            width: 22px;
+            height: 100%;
+            background: linear-gradient(90deg, #8a6200, #d4af37, #f4d03f, #d4af37, #8a6200);
+            opacity: 0.75;
+        }
+
+        .box-bow {
+            position: absolute;
+            top: -24px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 3;
+            width: 82px;
+            height: 52px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .bow-left {
+            position: absolute;
+            width: 34px;
+            height: 24px;
+            background: linear-gradient(135deg, #c9a227, #f4d03f, #a07800);
+            border-radius: 50% 0 50% 50%;
+            left: 0;
+            top: 6px;
+            transform: rotate(-8deg);
+            box-shadow: 0 3px 10px rgba(212, 175, 55, 0.35);
+        }
+
+        .bow-right {
+            position: absolute;
+            width: 34px;
+            height: 24px;
+            background: linear-gradient(135deg, #c9a227, #f4d03f, #a07800);
+            border-radius: 0 50% 50% 50%;
+            right: 0;
+            top: 6px;
+            transform: rotate(8deg);
+            box-shadow: 0 3px 10px rgba(212, 175, 55, 0.35);
+        }
+
+        .bow-center {
+            position: relative;
+            z-index: 1;
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, #f4d03f, #c9a227);
+            border-radius: 50%;
+            box-shadow: 0 2px 10px rgba(212, 175, 55, 0.5);
+        }
+
+        .gift-hint {
+            color: rgba(212, 175, 55, 0.65);
+            font-size: 0.75rem;
+            letter-spacing: 0.35rem;
+            text-transform: uppercase;
+            animation: hintPulse 2.2s ease-in-out infinite;
+        }
+
+        @keyframes hintPulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        /* Birthday Reveal */
+        .birthday-reveal {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 15;
+            display: none;
+            opacity: 0;
+            width: 88%;
+            max-width: 680px;
+            background: rgba(4, 4, 4, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 20px;
+            padding: 3rem 2.5rem;
+            transition: opacity 0.8s ease;
+        }
+
+        .birthday-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(2rem, 5vw, 3.8rem);
+            font-weight: 300;
+            color: #f4d03f;
+            text-shadow: 0 0 40px rgba(212, 175, 55, 0.35);
+            letter-spacing: 2px;
+            min-height: 70px;
+            line-height: 1.2;
+        }
+
+        .birthday-sub {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.65);
+            margin-top: 1rem;
+            font-style: italic;
+            min-height: 30px;
+        }
+
+        .birthday-cursor {
+            display: inline-block;
+            animation: cursorBlink 0.7s step-end infinite;
+            color: #f4d03f;
+        }
+
+        @keyframes cursorBlink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* Burst Photos */
+        .burst-photo {
+            position: absolute;
+            width: 98px;
+            background: white;
+            padding: 5px 5px 22px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.55);
+            z-index: 8;
+            pointer-events: none;
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0);
+        }
+
+        .burst-photo img {
+            width: 100%;
+            height: 78px;
+            object-fit: cover;
+            display: block;
+        }
+
         /* Music Player */
         #music-player {
             position: fixed;
@@ -761,19 +972,32 @@
 
     <!-- Hero Section -->
     <section id="hero" class="hero">
-        <div class="balloon"></div>
-        <div class="balloon"></div>
-        <div class="balloon"></div>
-        <div class="balloon"></div>
-        <div class="balloon"></div>
 
-        <div class="hero-content">
-            <h1>🎉 Happy Birthday Sharon! 🎂</h1>
-            <p>A special gift just for you</p>
-            <button class="cta-button" onclick="document.getElementById('gallery').scrollIntoView({behavior: 'smooth'})">
+        <div class="hero-gift-wrapper" id="giftWrapper">
+            <div class="gift-box-outer" id="giftBox" onclick="openGiftBox()">
+                <div class="box-bow" id="boxBow">
+                    <div class="bow-left"></div>
+                    <div class="bow-right"></div>
+                    <div class="bow-center"></div>
+                </div>
+                <div class="box-lid" id="boxLid">
+                    <div class="lid-ribbon"></div>
+                </div>
+                <div class="box-body">
+                    <div class="body-ribbon"></div>
+                </div>
+            </div>
+            <p class="gift-hint" id="giftHint">tap to open</p>
+        </div>
+
+        <div class="birthday-reveal" id="birthdayReveal">
+            <h1 class="birthday-text" id="birthdayText"></h1>
+            <p class="birthday-sub" id="birthdaySub"></p>
+            <button class="cta-button" id="exploreBtn" style="opacity:0;transition:opacity 0.6s;" onclick="document.getElementById('gallery').scrollIntoView({behavior:'smooth'})">
                 Explore 💝
             </button>
         </div>
+
     </section>
 
     <!-- Gallery / 3D Carousel Section -->
@@ -1016,6 +1240,108 @@
 
         function stopAutoSpin() {
             clearInterval(autoSpin);
+        }
+
+        // Gift box hero
+        const heroPhotoSrcs = [
+            'assets/photos/photo1.jpg',
+            'assets/photos/photo2.jpeg',
+            'assets/photos/photo3.jpeg',
+            'assets/photos/photo4.jpeg',
+            'assets/photos/photo5.png',
+            'assets/photos/photo6.png',
+            'assets/photos/photo7.png',
+            'assets/photos/photo8.png',
+            'assets/photos/photo9.png',
+            'assets/photos/photo10.png',
+            'assets/photos/photo11.png',
+            'assets/photos/photo12.png',
+            'assets/photos/photo13.png',
+            'assets/photos/photo14.png',
+            'assets/photos/photo15.png',
+            'assets/photos/photo16.png',
+            'assets/photos/photo17.png',
+            'assets/photos/photo18.png',
+            'assets/photos/photo19.png',
+        ];
+
+        let boxOpened = false;
+
+        function openGiftBox() {
+            if (boxOpened) return;
+            boxOpened = true;
+
+            document.getElementById('giftHint').style.opacity = '0';
+
+            const lid = document.getElementById('boxLid');
+            const bow = document.getElementById('boxBow');
+            lid.style.transition = 'all 0.7s cubic-bezier(0.68, -0.55, 0.27, 1.55)';
+            lid.style.transform = 'translateY(-230px) rotate(-22deg) translateX(15px)';
+            lid.style.opacity = '0';
+            bow.style.transition = 'all 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55)';
+            bow.style.transform = 'translateX(-50%) translateY(-260px) rotate(18deg)';
+            bow.style.opacity = '0';
+
+            setTimeout(burstHeroPhotos, 320);
+            setTimeout(showBirthdayReveal, 1900);
+        }
+
+        function burstHeroPhotos() {
+            const hero = document.getElementById('hero');
+            heroPhotoSrcs.forEach((src, i) => {
+                const el = document.createElement('div');
+                el.className = 'burst-photo';
+                el.innerHTML = `<img src="${src}" alt="">`;
+                el.style.left = '50%';
+                el.style.top = '50%';
+                hero.appendChild(el);
+
+                const angle = (i / heroPhotoSrcs.length) * 360 + (Math.random() - 0.5) * 18;
+                const dist = 190 + Math.random() * 210;
+                const tx = Math.cos(angle * Math.PI / 180) * dist;
+                const ty = Math.sin(angle * Math.PI / 180) * dist;
+                const rot = (Math.random() - 0.5) * 28;
+
+                setTimeout(() => {
+                    el.style.transition = `all ${0.65 + Math.random() * 0.45}s cubic-bezier(0.34, 1.3, 0.64, 1)`;
+                    el.style.transform = `translate(calc(-50% + ${tx}px), calc(-50% + ${ty}px)) rotate(${rot}deg) scale(1)`;
+                    el.style.opacity = '1';
+                }, 60 + i * 45);
+            });
+        }
+
+        function showBirthdayReveal() {
+            const wrapper = document.getElementById('giftWrapper');
+            wrapper.style.opacity = '0';
+            wrapper.style.pointerEvents = 'none';
+
+            const reveal = document.getElementById('birthdayReveal');
+            reveal.style.display = 'block';
+            setTimeout(() => reveal.style.opacity = '1', 50);
+
+            typeHeroText('Happy Birthday Sharon! 🎂', document.getElementById('birthdayText'), () => {
+                setTimeout(() => {
+                    typeHeroText('From Vik, with all my love ❤️', document.getElementById('birthdaySub'), () => {
+                        const btn = document.getElementById('exploreBtn');
+                        btn.style.opacity = '1';
+                    });
+                }, 400);
+            });
+        }
+
+        function typeHeroText(text, el, cb) {
+            el.innerHTML = '<span class="birthday-cursor">|</span>';
+            const cursor = el.querySelector('.birthday-cursor');
+            let i = 0;
+            const iv = setInterval(() => {
+                cursor.insertAdjacentText('beforebegin', text[i]);
+                i++;
+                if (i >= text.length) {
+                    clearInterval(iv);
+                    cursor.remove();
+                    if (cb) cb();
+                }
+            }, 75);
         }
 
         // Personality carousel
