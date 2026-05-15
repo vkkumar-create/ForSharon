@@ -112,13 +112,9 @@
             z-index: 5;
         }
 
-        /* Revealed photo card (sticker style) */
+        /* Revealed photo cutout (transparent PNG floats above boxes) */
         .photo-card {
             position: absolute;
-            background: white;
-            padding: 5px 5px 5px 5px;
-            border-radius: 6px;
-            box-shadow: 0 12px 35px rgba(0,0,0,0.6);
             z-index: 20;
             opacity: 0;
             transform: scale(0) rotate(var(--rot, 0deg));
@@ -131,11 +127,13 @@
         }
 
         .photo-card img {
-            width: 95px;
-            height: 120px;
-            object-fit: cover;
+            width: 143px;
+            height: auto;
+            max-height: 220px;
             display: block;
-            border-radius: 3px;
+            filter:
+                drop-shadow(0 10px 20px rgba(0,0,0,0.55))
+                drop-shadow(0 4px 6px rgba(0,0,0,0.35));
         }
 
         /* Gift Box — luxury matte-black with SVG-based ribbon */
@@ -1106,12 +1104,12 @@
             clearInterval(autoSpin);
         }
 
-        // Hero gift boxes — 15 luxury matte-black boxes scattered naturally
+        // Hero gift boxes — 17 luxury matte-black boxes with photo cutouts
         const revealPhotoSrcs = [
-            'assets/photos/photo1.jpg',
-            'assets/photos/photo2.jpeg',
-            'assets/photos/photo3.jpeg',
-            'assets/photos/photo4.jpeg',
+            'assets/photos/photo1.png',
+            'assets/photos/photo2.png',
+            'assets/photos/photo3.png',
+            'assets/photos/photo4.png',
             'assets/photos/photo5.png',
             'assets/photos/photo6.png',
             'assets/photos/photo7.png',
@@ -1123,44 +1121,50 @@
             'assets/photos/photo13.png',
             'assets/photos/photo14.png',
             'assets/photos/photo15.png',
+            'assets/photos/photo16.png',
+            'assets/photos/photo17.png',
         ];
 
-        // 15 scattered box positions
+        // 17 scattered box positions
         const boxLayout = [
-            { left: '10%', top: '14%', scale: 0.9,  rot: -7 },
-            { left: '32%', top: '8%',  scale: 1.0,  rot: 5 },
-            { left: '54%', top: '12%', scale: 0.92, rot: -4 },
-            { left: '76%', top: '6%',  scale: 1.05, rot: 6 },
-            { left: '92%', top: '20%', scale: 0.88, rot: -8 },
-            { left: '20%', top: '32%', scale: 0.95, rot: 8 },
-            { left: '42%', top: '36%', scale: 1.0,  rot: -5 },
-            { left: '64%', top: '32%', scale: 0.95, rot: 4 },
-            { left: '85%', top: '40%', scale: 0.9,  rot: -6 },
-            { left: '8%',  top: '48%', scale: 1.0,  rot: 7 },
-            { left: '28%', top: '58%', scale: 0.92, rot: -4 },
-            { left: '50%', top: '60%', scale: 1.0,  rot: 6 },
-            { left: '72%', top: '56%', scale: 1.05, rot: -7 },
-            { left: '15%', top: '76%', scale: 0.95, rot: 5 },
-            { left: '45%', top: '82%', scale: 0.9,  rot: -3 },
+            { left: '8%',  top: '12%', scale: 0.9,  rot: -7 },
+            { left: '28%', top: '6%',  scale: 1.0,  rot: 5 },
+            { left: '48%', top: '14%', scale: 0.92, rot: -4 },
+            { left: '68%', top: '8%',  scale: 1.05, rot: 6 },
+            { left: '88%', top: '14%', scale: 0.88, rot: -8 },
+            { left: '18%', top: '30%', scale: 0.95, rot: 8 },
+            { left: '38%', top: '34%', scale: 1.0,  rot: -5 },
+            { left: '58%', top: '30%', scale: 0.95, rot: 4 },
+            { left: '78%', top: '34%', scale: 0.9,  rot: -6 },
+            { left: '6%',  top: '46%', scale: 1.0,  rot: 7 },
+            { left: '26%', top: '54%', scale: 0.92, rot: -4 },
+            { left: '48%', top: '58%', scale: 1.0,  rot: 6 },
+            { left: '68%', top: '54%', scale: 1.05, rot: -7 },
+            { left: '88%', top: '52%', scale: 0.9,  rot: 5 },
+            { left: '14%', top: '74%', scale: 0.95, rot: 5 },
+            { left: '40%', top: '82%', scale: 0.9,  rot: -3 },
+            { left: '72%', top: '78%', scale: 1.0,  rot: 4 },
         ];
 
-        // 15 photo reveal positions
+        // 17 photo reveal positions
         const photoFloatPositions = [
-            { left: '8%',  top: '10%', rot: -10 },
-            { left: '30%', top: '4%',  rot: 7 },
-            { left: '52%', top: '8%',  rot: -4 },
-            { left: '74%', top: '4%',  rot: 11 },
-            { left: '90%', top: '12%', rot: -8 },
-            { left: '18%', top: '28%', rot: 5 },
-            { left: '40%', top: '30%', rot: -6 },
-            { left: '62%', top: '26%', rot: 9 },
-            { left: '83%', top: '34%', rot: -5 },
-            { left: '6%',  top: '42%', rot: 4 },
-            { left: '26%', top: '52%', rot: -8 },
-            { left: '48%', top: '54%', rot: 6 },
-            { left: '70%', top: '50%', rot: -4 },
-            { left: '12%', top: '70%', rot: 7 },
-            { left: '42%', top: '76%', rot: -6 },
+            { left: '6%',  top: '8%',  rot: -10 },
+            { left: '26%', top: '0%',  rot: 7 },
+            { left: '46%', top: '6%',  rot: -4 },
+            { left: '66%', top: '2%',  rot: 11 },
+            { left: '88%', top: '4%',  rot: -8 },
+            { left: '14%', top: '22%', rot: 5 },
+            { left: '36%', top: '26%', rot: -6 },
+            { left: '56%', top: '22%', rot: 9 },
+            { left: '78%', top: '24%', rot: -5 },
+            { left: '4%',  top: '40%', rot: 4 },
+            { left: '24%', top: '46%', rot: -8 },
+            { left: '46%', top: '48%', rot: 6 },
+            { left: '66%', top: '44%', rot: -4 },
+            { left: '86%', top: '42%', rot: 7 },
+            { left: '10%', top: '64%', rot: 6 },
+            { left: '38%', top: '70%', rot: -7 },
+            { left: '68%', top: '66%', rot: 4 },
         ];
 
         const openedHeroBoxes = new Set();
@@ -1274,7 +1278,7 @@
                 document.getElementById('heroCanvas').appendChild(card);
                 requestAnimationFrame(() => requestAnimationFrame(() => card.classList.add('visible')));
 
-                if (openedHeroBoxes.size === 15) {
+                if (openedHeroBoxes.size === 17) {
                     setTimeout(() => { document.getElementById('exploreHint').style.opacity = '1'; }, 600);
                 }
             }, 420);
