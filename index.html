@@ -19,9 +19,9 @@
             overflow-x: hidden;
         }
 
-        /* Navigation — elegant serif glass with gold accent */
+        /* Navigation — fully transparent, text only */
         nav {
-            background: rgba(10, 5, 20, 0.55);
+            background: transparent;
             padding: 1.4rem 2.5rem;
             display: flex;
             justify-content: center;
@@ -30,14 +30,10 @@
             position: sticky;
             top: 0;
             z-index: 100;
-            backdrop-filter: blur(20px) saturate(180%);
-            -webkit-backdrop-filter: blur(20px) saturate(180%);
-            border-bottom: 1px solid rgba(244, 208, 90, 0.18);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.25);
         }
 
         nav a {
-            color: rgba(255, 255, 255, 0.85);
+            color: rgba(255, 255, 255, 0.92);
             text-decoration: none;
             font-family: 'Cormorant Garamond', serif;
             font-weight: 400;
@@ -47,6 +43,7 @@
             padding: 0.3rem 0.2rem;
             position: relative;
             transition: color 0.35s ease;
+            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.55), 0 0 2px rgba(0, 0, 0, 0.35);
         }
 
         nav a::after {
