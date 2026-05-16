@@ -229,44 +229,298 @@
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
         }
 
-        /* Messages Section */
+        /* Messages Section — Birthday Card */
         #messages {
-            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            background: linear-gradient(135deg, #1f0f2a 0%, #2d1d44 50%, #1f0f2a 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5rem 1.5rem;
         }
 
-        .messages-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
+        .bday-card-stage {
+            perspective: 2200px;
+            width: min(420px, 90vw);
+            height: 560px;
         }
 
-        .message-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s;
-            backdrop-filter: blur(10px);
+        .bday-card {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 1.3s cubic-bezier(0.45, 0.05, 0.25, 1);
+            cursor: pointer;
         }
 
-        .message-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        .bday-card.opened {
+            transform: rotateY(180deg);
+            cursor: default;
         }
 
-        .message-card h3 {
-            color: #667eea;
+        .card-face {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 6px;
+            background:
+                radial-gradient(ellipse at 30% 20%, #fffaee 0%, transparent 60%),
+                radial-gradient(ellipse at center, #fdf6e3 0%, #f3e9c8 100%);
+            box-shadow:
+                0 30px 60px rgba(0, 0, 0, 0.55),
+                0 12px 24px rgba(0, 0, 0, 0.35),
+                inset 0 0 0 1px rgba(180, 140, 50, 0.45),
+                inset 0 0 0 8px #fdf6e3,
+                inset 0 0 0 9px rgba(180, 140, 50, 0.35);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 3.5rem 2.5rem;
+        }
+
+        .card-front {
+            justify-content: center;
+        }
+
+        .card-back {
+            transform: rotateY(180deg);
+            justify-content: flex-start;
+        }
+
+        .card-greeting {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.95rem;
+            color: #8a6a2a;
+            letter-spacing: 0.5em;
+            text-transform: uppercase;
             margin-bottom: 1rem;
-            font-size: 1.5rem;
+            font-weight: 500;
         }
 
-        .message-card p {
-            color: #333;
-            line-height: 1.8;
-            font-size: 1rem;
+        .card-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(3rem, 9vw, 4.2rem);
+            font-style: italic;
+            color: #2a1a0a;
+            line-height: 1;
+            margin: 0 0 1.8rem;
+            font-weight: 500;
         }
+
+        .card-divider {
+            width: 50px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #b89230, transparent);
+            margin: 0 0 1.5rem;
+        }
+
+        .card-subtitle {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.15rem;
+            color: #6a4f2a;
+            font-style: italic;
+            letter-spacing: 0.05em;
+        }
+
+        .card-hint {
+            position: absolute;
+            bottom: 2rem;
+            left: 0;
+            right: 0;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.7rem;
+            color: #8a6f4a;
+            letter-spacing: 0.45em;
+            text-transform: uppercase;
+            opacity: 0.55;
+            animation: hintPulse 2.5s ease-in-out infinite;
+        }
+
+        .card-inside-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.2rem;
+            font-style: italic;
+            color: #2a1a0a;
+            margin: 0 0 1rem;
+            font-weight: 500;
+        }
+
+        .card-inside-divider {
+            width: 50px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #b89230, transparent);
+            margin: 0 auto 2rem;
+        }
+
+        .card-message {
+            font-family: 'Caveat', cursive;
+            font-size: 1.4rem;
+            color: #4a3520;
+            line-height: 1.7;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            width: 100%;
+        }
+
+        .card-message-placeholder {
+            color: #b4a07a;
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+
+        .card-signoff {
+            font-family: 'Caveat', cursive;
+            font-size: 1.4rem;
+            color: #6a4f2a;
+            margin-top: auto;
+            padding-top: 1rem;
+        }
+
+        /* Password Modal */
+        .password-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(8, 4, 18, 0.78);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 200;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.35s ease;
+        }
+
+        .password-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .password-modal {
+            background: linear-gradient(140deg, #1f1230 0%, #2d1f44 100%);
+            border: 1px solid rgba(244, 208, 90, 0.28);
+            border-radius: 14px;
+            padding: 2.5rem 2.5rem 2rem;
+            max-width: 420px;
+            width: 90%;
+            text-align: center;
+            transform: scale(0.95);
+            transition: transform 0.35s cubic-bezier(0.34, 1.4, 0.64, 1);
+            position: relative;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+        }
+
+        .password-overlay.active .password-modal {
+            transform: scale(1);
+        }
+
+        .password-modal.shake {
+            animation: shakeModal 0.45s ease;
+        }
+
+        @keyframes shakeModal {
+            0%, 100% { transform: scale(1) translateX(0); }
+            20% { transform: scale(1) translateX(-12px); }
+            50% { transform: scale(1) translateX(12px); }
+            80% { transform: scale(1) translateX(-6px); }
+        }
+
+        .password-close {
+            position: absolute;
+            top: 0.8rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.3rem 0.6rem;
+            line-height: 1;
+            transition: color 0.3s;
+        }
+
+        .password-close:hover { color: rgba(255, 255, 255, 0.9); }
+
+        .password-modal h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            color: #f4d05a;
+            margin: 0 0 0.4rem;
+            font-weight: 500;
+            font-style: italic;
+        }
+
+        .password-modal .hint {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 1.8rem;
+            font-style: italic;
+            letter-spacing: 0.05em;
+        }
+
+        .password-modal input {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.35);
+            border: 1px solid rgba(244, 208, 90, 0.22);
+            color: white;
+            font-size: 1rem;
+            padding: 0.85rem 1rem;
+            border-radius: 6px;
+            text-align: center;
+            letter-spacing: 0.3em;
+            margin-bottom: 1.3rem;
+            outline: none;
+            transition: border-color 0.3s, background 0.3s;
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        .password-modal input:focus {
+            border-color: rgba(244, 208, 90, 0.6);
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .password-modal button {
+            background: linear-gradient(135deg, #f4d05a 0%, #c9a227 100%);
+            color: #1a0f2e;
+            border: none;
+            padding: 0.85rem 2.5rem;
+            border-radius: 6px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .password-modal button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(244, 208, 90, 0.25);
+        }
+
+        .password-error {
+            color: #e89898;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 0.9rem;
+            font-style: italic;
+            margin-top: 1rem;
+            height: 1.2rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .password-error.visible { opacity: 1; }
 
         /* Memories / Scrapbook Section */
         #memories {
@@ -784,36 +1038,40 @@
         </div>
     </section>
 
-    <!-- Messages Section -->
+    <!-- Messages Section — Birthday Card -->
     <section id="messages">
-        <div class="messages-container">
-            <div class="message-card">
-                <h3>💌 A Letter</h3>
-                <p>
-                    Dear Sharon,
-
-                    On your special day, I wanted you to know how much you mean to me. Your smile brightens my darkest days, and your laughter is my favorite sound. Thank you for being an incredible person.
-
-                    Forever yours,
-                    Vik
-                </p>
-            </div>
-
-            <div class="message-card">
-                <h3>✨ Why You're Amazing</h3>
-                <p>
-                    You light up every room you walk into. Your kindness knows no bounds. You make ordinary moments extraordinary. Your dreams inspire me. You're not just beautiful on the outside, but your heart is even more beautiful. You're my person.
-                </p>
-            </div>
-
-            <div class="message-card">
-                <h3>🎁 My Wish for You</h3>
-                <p>
-                    I wish for you a year filled with endless joy, unforgettable adventures, and all the happiness you deserve. May your dreams come true and may you always remember how loved and cherished you are. Happy birthday to the love of my life!
-                </p>
+        <div class="bday-card-stage">
+            <div class="bday-card" id="bdayCard">
+                <div class="card-face card-front">
+                    <p class="card-greeting">For You</p>
+                    <h2 class="card-name">Sharon</h2>
+                    <div class="card-divider"></div>
+                    <p class="card-subtitle">A Birthday Note</p>
+                    <p class="card-hint">tap to open</p>
+                </div>
+                <div class="card-face card-back">
+                    <h3 class="card-inside-title">Happy Birthday</h3>
+                    <div class="card-inside-divider"></div>
+                    <div class="card-message">
+                        <span class="card-message-placeholder">…your message will appear here soon…</span>
+                    </div>
+                    <p class="card-signoff">— Vik</p>
+                </div>
             </div>
         </div>
     </section>
+
+    <!-- Password Modal -->
+    <div class="password-overlay" id="passwordOverlay">
+        <div class="password-modal" id="passwordModal">
+            <button class="password-close" onclick="closePasswordOverlay()" aria-label="Close">×</button>
+            <h3>One little step</h3>
+            <p class="hint">enter the password to open</p>
+            <input type="password" id="passwordInput" placeholder="password" autocomplete="off" autocapitalize="off" spellcheck="false">
+            <button onclick="checkBdayPassword()">Open</button>
+            <p class="password-error" id="passwordError">hmm, not quite — try again</p>
+        </div>
+    </div>
 
     <!-- Memories Section -->
     <section id="memories">
@@ -888,6 +1146,51 @@
 
     <script>
         // Hero is now a single collage image — no JS needed.
+
+        // Birthday card password
+        const CARD_PASSWORD = 'bububear';
+        const bdayCard = document.getElementById('bdayCard');
+        const pwOverlay = document.getElementById('passwordOverlay');
+        const pwModal = document.getElementById('passwordModal');
+        const pwInput = document.getElementById('passwordInput');
+        const pwError = document.getElementById('passwordError');
+
+        bdayCard.addEventListener('click', () => {
+            if (bdayCard.classList.contains('opened')) return;
+            pwOverlay.classList.add('active');
+            setTimeout(() => pwInput.focus(), 350);
+        });
+
+        function checkBdayPassword() {
+            if (pwInput.value.toLowerCase().trim() === CARD_PASSWORD) {
+                pwOverlay.classList.remove('active');
+                pwError.classList.remove('visible');
+                setTimeout(() => {
+                    bdayCard.classList.add('opened');
+                    pwInput.value = '';
+                }, 320);
+            } else {
+                pwModal.classList.add('shake');
+                pwError.classList.add('visible');
+                setTimeout(() => pwModal.classList.remove('shake'), 450);
+                pwInput.select();
+            }
+        }
+
+        function closePasswordOverlay() {
+            pwOverlay.classList.remove('active');
+            pwError.classList.remove('visible');
+            pwInput.value = '';
+        }
+
+        pwInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') { e.preventDefault(); checkBdayPassword(); }
+            if (e.key === 'Escape') closePasswordOverlay();
+        });
+
+        pwOverlay.addEventListener('click', (e) => {
+            if (e.target === pwOverlay) closePasswordOverlay();
+        });
 
         // Personality carousel
         const totalPersonalities = 9;
