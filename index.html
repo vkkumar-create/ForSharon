@@ -14,12 +14,16 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #0a0612;
             min-height: 100vh;
             overflow-x: hidden;
         }
 
-        /* Navigation — fully transparent, text only */
+        section {
+            scroll-margin-top: 70px;
+        }
+
+        /* Navigation — fully transparent, floats over hero */
         nav {
             background: transparent;
             padding: 1.4rem 2.5rem;
@@ -27,8 +31,10 @@
             justify-content: center;
             gap: 3.5rem;
             flex-wrap: wrap;
-            position: sticky;
+            position: fixed;
             top: 0;
+            left: 0;
+            right: 0;
             z-index: 100;
         }
 
