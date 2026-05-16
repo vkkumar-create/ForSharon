@@ -74,7 +74,7 @@
             nav a { font-size: 0.8rem; letter-spacing: 0.22em; }
         }
 
-        /* Hero Section — full-bleed collage with SHARON overlay */
+        /* Hero Section — full-bleed image */
         .hero {
             min-height: 100vh;
             position: relative;
@@ -83,12 +83,12 @@
             padding: 0;
             margin: 0;
             display: block;
-            background-color: #1a1024;
-            background-image: url('assets/images/hero-collage.jpg');
+            background-color: #0a0612;
+            background-image: url('assets/images/hero.png');
             background-size: cover;
             background-position: center center;
             background-repeat: no-repeat;
-            animation: heroFade 1.2s ease-out;
+            animation: heroFade 1.4s ease-out;
         }
 
         @keyframes heroFade {
@@ -96,65 +96,55 @@
             to   { opacity: 1; }
         }
 
-        .hero::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(180deg,
-                rgba(0,0,0,0.15) 0%,
-                rgba(0,0,0,0) 25%,
-                rgba(0,0,0,0) 50%,
-                rgba(0,0,0,0.45) 88%,
-                rgba(0,0,0,0.75) 100%);
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .hero-name {
-            position: absolute;
-            left: 0;
-            right: 0;
-            bottom: 0.4rem;
-            z-index: 5;
-            font-family: 'Cormorant Garamond', serif;
-            font-weight: 500;
-            font-size: clamp(5rem, 22vw, 22rem);
-            line-height: 0.82;
-            color: #ffffff;
-            letter-spacing: 0.04em;
-            text-align: center;
-            text-shadow:
-                0 4px 40px rgba(0, 0, 0, 0.55),
-                0 1px 0 rgba(0, 0, 0, 0.2);
-            user-select: none;
-            margin: 0;
-            padding: 0 1rem;
-        }
-
         .hero-explore {
             position: absolute;
-            bottom: 1.2rem;
+            bottom: 1.5rem;
             left: 50%;
             transform: translateX(-50%);
             z-index: 7;
-            color: rgba(255, 255, 255, 0.55);
-            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.72rem;
             letter-spacing: 0.4rem;
             text-transform: uppercase;
             text-decoration: none;
             transition: color 0.3s ease, transform 0.3s ease;
             animation: hintPulse 2.4s ease-in-out infinite;
-            mix-blend-mode: difference;
         }
 
         .hero-explore:hover {
-            color: rgba(255, 255, 255, 0.95);
+            color: rgba(255, 255, 255, 1);
             transform: translateX(-50%) translateY(-2px);
         }
 
         @keyframes hintPulse {
             0%, 100% { opacity: 0.55; }
             50% { opacity: 1; }
+        }
+
+        /* Happy Birthday Section — the collage */
+        #happybirthday {
+            background-color: #160a20;
+            background-image:
+                radial-gradient(ellipse at 25% 30%, rgba(130, 70, 200, 0.18) 0%, transparent 55%),
+                radial-gradient(ellipse at 75% 70%, rgba(90, 50, 160, 0.15) 0%, transparent 55%),
+                linear-gradient(135deg, #140a20 0%, #25153a 50%, #1a1024 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem 1.5rem;
+        }
+
+        .happybirthday-collage {
+            max-width: min(1100px, 92vw);
+            width: auto;
+            max-height: 80vh;
+            height: auto;
+            border-radius: 12px;
+            box-shadow:
+                0 30px 70px rgba(0, 0, 0, 0.6),
+                0 12px 25px rgba(0, 0, 0, 0.4);
+            display: block;
         }
 
         .cta-button {
@@ -713,15 +703,20 @@
 
     <nav>
         <a href="#hero">Home</a>
+        <a href="#happybirthday">Happy Birthday</a>
         <a href="#personalities">Sharon's Modes</a>
         <a href="#messages">Messages</a>
         <a href="#memories">Memories</a>
     </nav>
 
     <!-- Hero Section -->
-    <section id="hero" class="hero" aria-label="Happy Birthday Sharon">
-        <h1 class="hero-name">SHARON</h1>
-        <a href="#personalities" class="hero-explore">scroll ↓</a>
+    <section id="hero" class="hero" aria-label="Sharon">
+        <a href="#happybirthday" class="hero-explore">scroll ↓</a>
+    </section>
+
+    <!-- Happy Birthday Section (collage) -->
+    <section id="happybirthday">
+        <img class="happybirthday-collage" src="assets/images/hero-collage.jpg" alt="Happy Birthday Bubu Bear">
     </section>
 
     <!-- Personality Cards Section -->
