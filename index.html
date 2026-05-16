@@ -19,32 +19,59 @@
             overflow-x: hidden;
         }
 
-        /* Navigation */
+        /* Navigation — elegant serif glass with gold accent */
         nav {
-            background: rgba(0, 0, 0, 0.3);
-            padding: 1rem 2rem;
+            background: rgba(10, 5, 20, 0.55);
+            padding: 1.4rem 2.5rem;
             display: flex;
             justify-content: center;
-            gap: 2rem;
+            gap: 3.5rem;
             flex-wrap: wrap;
             position: sticky;
             top: 0;
             z-index: 100;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid rgba(244, 208, 90, 0.18);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.25);
         }
 
         nav a {
-            color: white;
+            color: rgba(255, 255, 255, 0.85);
             text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 400;
+            font-size: 1rem;
+            letter-spacing: 0.32em;
+            text-transform: uppercase;
+            padding: 0.3rem 0.2rem;
+            position: relative;
+            transition: color 0.35s ease;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 50%;
+            width: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #f4d05a, transparent);
+            transition: width 0.45s ease, left 0.45s ease;
         }
 
         nav a:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
+            color: #f4d05a;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+            left: 0;
+        }
+
+        @media (max-width: 768px) {
+            nav { gap: 1.5rem; padding: 1rem 1rem; }
+            nav a { font-size: 0.8rem; letter-spacing: 0.22em; }
         }
 
         /* Hero Section — single collage image */
@@ -494,15 +521,6 @@
 
             .photo-display {
                 height: 300px;
-            }
-
-            nav {
-                gap: 0.5rem;
-            }
-
-            nav a {
-                padding: 0.4rem 0.8rem;
-                font-size: 0.9rem;
             }
         }
 
