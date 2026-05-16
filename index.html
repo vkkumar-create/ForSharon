@@ -47,225 +47,61 @@
             transform: translateY(-2px);
         }
 
-        /* Hero Section */
+        /* Hero Section — single collage image */
         .hero {
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
             text-align: center;
             color: white;
             position: relative;
             overflow: hidden;
-            padding: 4rem 1rem 3rem;
-            gap: 1.5rem;
-            background-color: #2a1d44;
+            padding: 3rem 1.5rem;
+            gap: 2rem;
+            background-color: #1a1024;
             background-image:
-                radial-gradient(ellipse at 0% 0%, rgba(12, 6, 22, 0.85) 0%, transparent 55%),
-                radial-gradient(ellipse at 100% 100%, rgba(12, 6, 22, 0.85) 0%, transparent 55%),
-                radial-gradient(ellipse at 28% 35%, rgba(150, 100, 210, 0.18) 0%, transparent 50%),
-                radial-gradient(ellipse at 72% 65%, rgba(110, 70, 180, 0.14) 0%, transparent 50%),
-                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='1' seed='3'/%3E%3CfeColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.16 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E"),
-                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='700' height='700'%3E%3Cfilter id='r'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.016' numOctaves='4' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.42  0 0 0 0 0.25  0 0 0 0 0.58  0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23r)'/%3E%3C/svg%3E"),
-                linear-gradient(135deg, #1a0f2e 0%, #2d1f44 35%, #4a3370 60%, #2a1d44 100%);
+                radial-gradient(ellipse at 20% 30%, rgba(130, 70, 200, 0.18) 0%, transparent 55%),
+                radial-gradient(ellipse at 80% 70%, rgba(90, 50, 160, 0.15) 0%, transparent 55%),
+                linear-gradient(135deg, #140a20 0%, #25153a 50%, #1a1024 100%);
         }
 
         .hero::before { display: none; }
 
-        /* Birthday title */
-        .bday-header {
-            text-align: center;
-            z-index: 5;
-            line-height: 1.1;
-            margin-bottom: 0.5rem;
-        }
-
-        .bday-top-line {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(1.6rem, 4.5vw, 3.5rem);
-            font-weight: 300;
-            color: rgba(255, 255, 255, 0.92);
-            letter-spacing: 0.45em;
-            text-transform: uppercase;
-            display: block;
-            text-shadow: 0 2px 20px rgba(0,0,0,0.5);
-        }
-
-        .bday-name-line {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(2.8rem, 8vw, 6rem);
-            font-weight: 400;
-            font-style: italic;
-            color: #f4d03f;
-            letter-spacing: 0.12em;
-            text-shadow: 0 0 50px rgba(212, 175, 55, 0.4), 0 2px 20px rgba(0,0,0,0.5);
-            display: block;
-            margin-top: 0.2rem;
-        }
-
-        /* Scatter canvas — holds both boxes and photos */
-        .hero-canvas {
-            position: relative;
-            width: 100%;
-            flex: 1;
-            min-height: 520px;
-            z-index: 5;
-        }
-
-        /* Revealed photo cutout (flies out of the main box) */
-        .photo-card {
-            position: absolute;
-            z-index: 18;
-            opacity: 0;
-            transform: translate(-50%, -50%) scale(0) rotate(0deg);
-            left: 50%;
-            top: 50%;
-            transition:
-                opacity 0.5s ease,
-                transform 0.85s cubic-bezier(0.34, 1.4, 0.64, 1),
-                left 0.95s cubic-bezier(0.22, 1, 0.36, 1),
-                top 0.95s cubic-bezier(0.22, 1, 0.36, 1);
-        }
-
-        .photo-card.visible {
-            opacity: 1;
-            transform: translate(-50%, -50%) scale(1) rotate(var(--rot, 0deg));
-        }
-
-        .photo-card img {
-            width: 143px;
+        .hero-collage {
+            max-width: min(1100px, 92vw);
+            width: auto;
+            max-height: 78vh;
             height: auto;
-            max-height: 220px;
+            border-radius: 12px;
+            box-shadow:
+                0 30px 60px rgba(0, 0, 0, 0.6),
+                0 10px 25px rgba(0, 0, 0, 0.35);
             display: block;
-            filter:
-                drop-shadow(0 10px 20px rgba(0,0,0,0.55))
-                drop-shadow(0 4px 6px rgba(0,0,0,0.35));
+            animation: collageFadeIn 1.2s ease-out;
         }
 
-        /* Main premium gift box (centred) */
-        .main-gift-box-wrapper {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 15;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .main-gift-box {
-            position: relative;
-            width: 240px;
-            height: 290px;
-            cursor: pointer;
-            transition: transform 0.25s ease;
-            filter:
-                drop-shadow(0 30px 40px rgba(0,0,0,0.65))
-                drop-shadow(0 12px 18px rgba(0,0,0,0.45));
-            transform-origin: center bottom;
-        }
-
-        .main-gift-box:hover {
-            transform: scale(1.03) translateY(-3px);
-        }
-
-        .main-gift-box:active {
-            transform: scale(0.98);
-        }
-
-        .main-box-body-part {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 65%;
-        }
-
-        .main-box-top-part {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 50%;
-            z-index: 2;
-            transition: transform 0.45s cubic-bezier(0.5, 0, 0.5, 1.4);
-            transform-origin: center bottom;
-        }
-
-        .main-box-top-part.lifted {
-            transform: translateY(-22px) rotate(-2deg);
-        }
-
-        .main-gift-box svg {
-            width: 100%;
-            height: 100%;
-            display: block;
-            overflow: visible;
-        }
-
-        /* Counter / hint */
-        .unwrap-counter {
-            margin-top: 1.5rem;
-            color: rgba(255, 255, 255, 0.75);
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.1rem;
-            font-style: italic;
-            letter-spacing: 0.15em;
-            transition: opacity 0.4s ease;
-        }
-
-        .unwrap-counter .count-num {
-            color: #f4d05a;
-            font-weight: 400;
-            font-size: 1.3rem;
-        }
-
-        /* Completion message */
-        .completion-message {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-            z-index: 25;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 1s ease;
-            font-family: 'Cormorant Garamond', serif;
-        }
-
-        .completion-message.visible { opacity: 1; }
-
-        .completion-message .line-1 {
-            font-size: clamp(1.5rem, 4vw, 2.5rem);
-            color: rgba(255, 255, 255, 0.9);
-            font-style: italic;
-            letter-spacing: 0.1em;
-            margin-bottom: 0.5rem;
-        }
-
-        .completion-message .line-2 {
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            color: #f4d05a;
-            text-shadow: 0 0 40px rgba(212, 175, 55, 0.5);
-            letter-spacing: 0.05em;
+        @keyframes collageFadeIn {
+            from { opacity: 0; transform: translateY(20px) scale(0.98); }
+            to   { opacity: 1; transform: translateY(0) scale(1); }
         }
 
         .explore-hint {
-            color: rgba(255, 255, 255, 0.5);
+            color: rgba(255, 255, 255, 0.55);
             font-size: 0.72rem;
             letter-spacing: 0.3rem;
             text-transform: uppercase;
             text-decoration: none;
-            transition: opacity 0.8s ease;
-            z-index: 5;
+            transition: opacity 0.4s ease, color 0.3s ease;
             animation: hintPulse 2.2s ease-in-out infinite;
         }
 
+        .explore-hint:hover { color: rgba(255, 255, 255, 0.9); }
+
         @keyframes hintPulse {
-            0%, 100% { opacity: 0.4; }
-            50% { opacity: 0.9; }
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
         }
 
         .cta-button {
@@ -953,26 +789,8 @@
 
     <!-- Hero Section -->
     <section id="hero" class="hero">
-
-        <div class="bday-header">
-            <span class="bday-top-line">Happy Birthday</span>
-            <span class="bday-name-line">Sharon</span>
-        </div>
-
-        <div class="hero-canvas" id="heroCanvas">
-            <div class="main-gift-box-wrapper" id="giftBoxWrapper">
-                <div class="main-gift-box" id="mainGiftBox"></div>
-                <p class="unwrap-counter" id="unwrapCounter">tap to unwrap &nbsp;·&nbsp; <span class="count-num">0</span> / 28</p>
-            </div>
-
-            <div class="completion-message" id="completionMessage">
-                <div class="line-1">all twenty-eight unwrapped</div>
-                <div class="line-2">happy birthday, my love ❤️</div>
-            </div>
-        </div>
-
-        <a href="#gallery" class="explore-hint" id="exploreHint" style="opacity:0">scroll to explore ↓</a>
-
+        <img class="hero-collage" src="assets/images/hero-collage.jpg" alt="Happy Birthday Bubu Bear">
+        <a href="#gallery" class="explore-hint">scroll to explore ↓</a>
     </section>
 
     <!-- Gallery / 3D Carousel Section -->
@@ -1227,197 +1045,7 @@
             clearInterval(autoSpin);
         }
 
-        // Hero — one main premium box, 28 photo cutouts revealed on click
-        const TOTAL_PHOTOS = 28;
-        const revealPhotoSrcs = Array.from({ length: TOTAL_PHOTOS }, (_, i) => `assets/photos/photo${i + 1}.png`);
-
-        // 28 scattered reveal positions around the central box
-        const photoFloatPositions = [
-            { left: '8%',  top: '8%',  rot: -10 },
-            { left: '22%', top: '4%',  rot: 6 },
-            { left: '38%', top: '8%',  rot: -7 },
-            { left: '52%', top: '3%',  rot: 4 },
-            { left: '66%', top: '6%',  rot: -5 },
-            { left: '80%', top: '4%',  rot: 7 },
-            { left: '93%', top: '10%', rot: -4 },
-            { left: '4%',  top: '24%', rot: 5 },
-            { left: '18%', top: '26%', rot: -8 },
-            { left: '82%', top: '26%', rot: 6 },
-            { left: '96%', top: '28%', rot: -5 },
-            { left: '6%',  top: '46%', rot: 7 },
-            { left: '17%', top: '50%', rot: -4 },
-            { left: '83%', top: '48%', rot: 5 },
-            { left: '94%', top: '46%', rot: -6 },
-            { left: '4%',  top: '66%', rot: 4 },
-            { left: '18%', top: '70%', rot: -6 },
-            { left: '82%', top: '68%', rot: 7 },
-            { left: '96%', top: '66%', rot: -3 },
-            { left: '10%', top: '86%', rot: 8 },
-            { left: '26%', top: '90%', rot: -5 },
-            { left: '42%', top: '94%', rot: 6 },
-            { left: '58%', top: '92%', rot: -4 },
-            { left: '74%', top: '94%', rot: 7 },
-            { left: '90%', top: '88%', rot: -6 },
-            { left: '34%', top: '82%', rot: 5 },
-            { left: '66%', top: '84%', rot: -7 },
-            { left: '50%', top: '80%', rot: 4 },
-        ];
-
-        function createMainBoxSVG() {
-            return `
-                <div class="main-box-body-part">
-                    <svg viewBox="0 0 240 175" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-                        <defs>
-                            <linearGradient id="mbb" x1="50%" y1="0%" x2="50%" y2="100%">
-                                <stop offset="0%" stop-color="#2e2e34"/>
-                                <stop offset="40%" stop-color="#16161a"/>
-                                <stop offset="100%" stop-color="#06060a"/>
-                            </linearGradient>
-                            <linearGradient id="mbb-rb" x1="0%" y1="0%" x2="100%" y2="0%">
-                                <stop offset="0%" stop-color="#04040a"/>
-                                <stop offset="22%" stop-color="#1a1a22"/>
-                                <stop offset="44%" stop-color="#3a3a4a"/>
-                                <stop offset="50%" stop-color="#5a5a68"/>
-                                <stop offset="56%" stop-color="#3a3a4a"/>
-                                <stop offset="78%" stop-color="#1a1a22"/>
-                                <stop offset="100%" stop-color="#04040a"/>
-                            </linearGradient>
-                        </defs>
-                        <!-- Body -->
-                        <rect x="0" y="0" width="240" height="175" fill="url(#mbb)" rx="3"/>
-                        <!-- Top edge highlight -->
-                        <rect x="0" y="0" width="240" height="2" fill="#4a4a52" opacity="0.5"/>
-                        <!-- Left edge highlight -->
-                        <rect x="0" y="0" width="2" height="175" fill="#3a3a42" opacity="0.4"/>
-                        <!-- Right edge shadow -->
-                        <rect x="238" y="0" width="2" height="175" fill="#000" opacity="0.4"/>
-                        <!-- Bottom edge shadow -->
-                        <rect x="0" y="173" width="240" height="2" fill="#000" opacity="0.45"/>
-                        <!-- Vertical ribbon -->
-                        <rect x="103" y="0" width="34" height="175" fill="url(#mbb-rb)"/>
-                        <!-- Ribbon centre highlight -->
-                        <rect x="105" y="0" width="3" height="175" fill="#74747e" opacity="0.45"/>
-                    </svg>
-                </div>
-                <div class="main-box-top-part" id="mainBoxTop">
-                    <svg viewBox="0 0 240 145" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMax meet">
-                        <defs>
-                            <linearGradient id="mbl" x1="50%" y1="0%" x2="50%" y2="100%">
-                                <stop offset="0%" stop-color="#34343a"/>
-                                <stop offset="100%" stop-color="#1a1a1e"/>
-                            </linearGradient>
-                            <linearGradient id="mbl-rb" x1="0%" y1="0%" x2="100%" y2="0%">
-                                <stop offset="0%" stop-color="#04040a"/>
-                                <stop offset="22%" stop-color="#1a1a22"/>
-                                <stop offset="44%" stop-color="#3a3a4a"/>
-                                <stop offset="50%" stop-color="#5a5a68"/>
-                                <stop offset="56%" stop-color="#3a3a4a"/>
-                                <stop offset="78%" stop-color="#1a1a22"/>
-                                <stop offset="100%" stop-color="#04040a"/>
-                            </linearGradient>
-                            <linearGradient id="mbl-rbV" x1="0%" y1="0%" x2="0%" y2="100%">
-                                <stop offset="0%" stop-color="#1a1a22"/>
-                                <stop offset="50%" stop-color="#3a3a4a"/>
-                                <stop offset="100%" stop-color="#06060a"/>
-                            </linearGradient>
-                        </defs>
-
-                        <!-- Lid (extends slightly wider than body) -->
-                        <rect x="-4" y="95" width="248" height="48" fill="url(#mbl)" rx="3"/>
-                        <rect x="-4" y="95" width="248" height="2" fill="#4e4e56" opacity="0.55"/>
-                        <rect x="-4" y="141" width="248" height="3" fill="#000" opacity="0.7"/>
-                        <rect x="-4" y="95" width="2" height="48" fill="#3a3a42" opacity="0.4"/>
-                        <rect x="242" y="95" width="2" height="48" fill="#000" opacity="0.4"/>
-
-                        <!-- Horizontal ribbon on lid -->
-                        <rect x="-4" y="110" width="248" height="20" fill="url(#mbl-rb)"/>
-                        <rect x="-4" y="112" width="248" height="3" fill="#74747e" opacity="0.5"/>
-
-                        <!-- BOW -->
-                        <g transform="translate(120, 80)">
-                            <!-- Loops (back fill) -->
-                            <ellipse cx="-34" cy="0" rx="40" ry="22" fill="url(#mbl-rbV)" transform="rotate(-18 -34 0)"/>
-                            <ellipse cx="34" cy="0" rx="40" ry="22" fill="url(#mbl-rbV)" transform="rotate(18 34 0)"/>
-
-                            <!-- Inner shadow on loops (where they meet knot) -->
-                            <ellipse cx="-26" cy="6" rx="24" ry="6" fill="rgba(0,0,0,0.5)" transform="rotate(-18 -26 6)"/>
-                            <ellipse cx="26" cy="6" rx="24" ry="6" fill="rgba(0,0,0,0.5)" transform="rotate(18 26 6)"/>
-
-                            <!-- Highlights on outer loop -->
-                            <ellipse cx="-44" cy="-7" rx="14" ry="4" fill="#6a6a74" opacity="0.4" transform="rotate(-18 -44 -7)"/>
-                            <ellipse cx="44" cy="-7" rx="14" ry="4" fill="#6a6a74" opacity="0.4" transform="rotate(18 44 -7)"/>
-
-                            <!-- Knot wrapping -->
-                            <rect x="-13" y="-16" width="26" height="36" fill="#14141a" rx="2"/>
-                            <rect x="-12" y="-15" width="24" height="3" fill="#3a3a42" opacity="0.6"/>
-                            <rect x="-12" y="17" width="24" height="2" fill="#000" opacity="0.7"/>
-                            <rect x="-13" y="-16" width="2" height="36" fill="#3a3a42" opacity="0.4"/>
-
-                            <!-- Tail ribbons -->
-                            <path d="M -15,19 L -24,58 L -8,52 Z" fill="url(#mbl-rbV)"/>
-                            <path d="M 15,19 L 24,58 L 8,52 Z" fill="url(#mbl-rbV)"/>
-                            <path d="M -15,19 L -16,38 L -10,36 Z" fill="rgba(0,0,0,0.35)"/>
-                            <path d="M 15,19 L 16,38 L 10,36 Z" fill="rgba(0,0,0,0.35)"/>
-                        </g>
-                    </svg>
-                </div>`;
-        }
-
-        // Inject SVG into the main box
-        document.getElementById('mainGiftBox').innerHTML = createMainBoxSVG();
-
-        let unwrapCount = 0;
-        let isAnimating = false;
-
-        document.getElementById('mainGiftBox').addEventListener('click', () => {
-            if (isAnimating || unwrapCount >= TOTAL_PHOTOS) return;
-            isAnimating = true;
-
-            const top = document.getElementById('mainBoxTop');
-            top.classList.add('lifted');
-
-            // Spawn the photo just as the lid lifts
-            setTimeout(() => spawnHeroPhoto(unwrapCount), 130);
-
-            // Drop the lid back
-            setTimeout(() => {
-                top.classList.remove('lifted');
-                isAnimating = false;
-            }, 380);
-
-            unwrapCount++;
-            document.querySelector('#unwrapCounter .count-num').textContent = unwrapCount;
-
-            if (unwrapCount === TOTAL_PHOTOS) {
-                setTimeout(() => {
-                    const wrapper = document.getElementById('giftBoxWrapper');
-                    wrapper.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-                    wrapper.style.opacity = '0';
-                    wrapper.style.transform = 'translate(-50%, -50%) scale(0.7)';
-                    setTimeout(() => {
-                        wrapper.style.display = 'none';
-                        document.getElementById('completionMessage').classList.add('visible');
-                        document.getElementById('exploreHint').style.opacity = '1';
-                    }, 800);
-                }, 900);
-            }
-        });
-
-        function spawnHeroPhoto(i) {
-            const pos = photoFloatPositions[i];
-            const card = document.createElement('div');
-            card.className = 'photo-card';
-            card.style.setProperty('--rot', pos.rot + 'deg');
-            card.innerHTML = `<img src="${revealPhotoSrcs[i]}" alt="">`;
-            document.getElementById('heroCanvas').appendChild(card);
-
-            // Photo starts at centre (where box is), then flies to target
-            requestAnimationFrame(() => requestAnimationFrame(() => {
-                card.style.left = pos.left;
-                card.style.top = pos.top;
-                card.classList.add('visible');
-            }));
-        }
+        // Hero is now a single collage image — no JS needed.
 
         // Personality carousel
         const totalPersonalities = 9;
