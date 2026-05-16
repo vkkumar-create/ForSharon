@@ -127,15 +127,29 @@
         /* Happy Birthday Section — the collage */
         #happybirthday {
             background-color: #160a20;
-            background-image:
-                radial-gradient(ellipse at 25% 30%, rgba(130, 70, 200, 0.18) 0%, transparent 55%),
-                radial-gradient(ellipse at 75% 70%, rgba(90, 50, 160, 0.15) 0%, transparent 55%),
-                linear-gradient(135deg, #140a20 0%, #25153a 50%, #1a1024 100%);
+            background-image: url('assets/images/background-collage.png');
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 4rem 1.5rem;
+            position: relative;
+        }
+
+        #happybirthday::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at center, rgba(0,0,0,0) 40%, rgba(0,0,0,0.35) 100%);
+            pointer-events: none;
+        }
+
+        #happybirthday > * {
+            position: relative;
+            z-index: 1;
         }
 
         .happybirthday-collage {
