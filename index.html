@@ -1392,16 +1392,10 @@
         <div class="cinema-stage">
             <img class="cinema-bg" src="assets/images/cinema-bg.jpg" alt="Private cinema" loading="lazy" decoding="async">
             <div class="cinema-screen" id="cinemaScreen">
-                <!-- When sharon-video.mp4 is uploaded, swap the placeholder for:
-                     <video controls playsinline preload="metadata" poster="">
-                         <source src="assets/videos/sharon-video.mp4" type="video/mp4">
-                     </video>
-                -->
-                <div class="cinema-placeholder">
-                    <span class="now-showing">— Now Showing —</span>
-                    <span class="feature-title">A Letter to Sharon</span>
-                    <span class="subtitle">presenting soon</span>
-                </div>
+                <video id="cinemaVideo" controls playsinline preload="metadata">
+                    <source src="assets/videos/sharon-video.mp4" type="video/mp4">
+                    Your browser doesn't support video playback.
+                </video>
             </div>
         </div>
     </section>
@@ -1619,6 +1613,21 @@
         }, { threshold: [0.4, 0.6] });
 
         document.querySelectorAll('section[id]').forEach(s => sectionObserver.observe(s));
+
+        // Pause section music while the cinema video plays
+        const cinemaVideo = document.getElementById('cinemaVideo');
+        if (cinemaVideo) {
+            cinemaVideo.addEventListener('play', () => {
+                if (!heroAudio.paused) {
+                    fadeAudio(heroAudio, heroAudio.volume, 0, 400, () => heroAudio.pause());
+                }
+            });
+            const resumeMusic = () => {
+                if (!isMuted) ensureTrackFor(currentSectionId);
+            };
+            cinemaVideo.addEventListener('pause', resumeMusic);
+            cinemaVideo.addEventListener('ended', resumeMusic);
+        }
 
         // Confetti effect
         function createConfetti() {
