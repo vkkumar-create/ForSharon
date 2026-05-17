@@ -359,6 +359,80 @@
         .card-back {
             transform: rotateY(180deg);
             justify-content: flex-start;
+            padding: 2rem 1.8rem 1.5rem;
+        }
+
+        .card-back .card-inside-title {
+            font-size: 1.6rem;
+            margin: 0 0 0.5rem;
+        }
+
+        .card-back .card-inside-divider {
+            margin: 0 auto 1rem;
+        }
+
+        .card-letter {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 0.6rem;
+            font-family: 'Cormorant Garamond', serif;
+            color: #3a2510;
+            font-size: 0.86rem;
+            line-height: 1.6;
+            text-align: left;
+            width: 100%;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .card-letter::-webkit-scrollbar { width: 5px; }
+        .card-letter::-webkit-scrollbar-track { background: transparent; }
+        .card-letter::-webkit-scrollbar-thumb {
+            background: rgba(180, 140, 50, 0.35);
+            border-radius: 3px;
+        }
+        .card-letter::-webkit-scrollbar-thumb:hover {
+            background: rgba(180, 140, 50, 0.6);
+        }
+
+        .card-letter p { margin-bottom: 0.75rem; }
+        .card-letter p:last-child { margin-bottom: 0; }
+
+        .letter-greeting {
+            font-style: italic;
+            font-size: 0.98rem;
+            color: #2a1a0a;
+        }
+
+        .letter-emphasis {
+            text-align: center;
+            font-size: 1.18rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            color: #2a1a0a;
+            margin: 1.1rem 0 !important;
+        }
+
+        .letter-shout {
+            font-weight: 700;
+            color: #6a3a10;
+            letter-spacing: 0.01em;
+        }
+
+        .letter-closing {
+            text-align: center;
+            font-style: italic;
+            margin-top: 1.2rem !important;
+            color: #2a1a0a;
+            font-size: 0.95rem;
+        }
+
+        .letter-signature {
+            text-align: center;
+            font-style: italic;
+            font-size: 0.78rem;
+            color: #5a4520;
+            margin-top: 0.6rem !important;
+            line-height: 1.55;
         }
 
         .card-greeting {
@@ -1139,10 +1213,17 @@
                 <div class="card-face card-back">
                     <h3 class="card-inside-title">Happy Birthday</h3>
                     <div class="card-inside-divider"></div>
-                    <div class="card-message">
-                        <span class="card-message-placeholder">…your message will appear here soon…</span>
+                    <div class="card-letter">
+                        <p class="letter-greeting">Dearest Reader <em>(Sharon)</em>,</p>
+                        <p>I, Man Whistledown <em>(its me VK)</em>, would like to congratulate you on turning 28. It is yet another year, and it begs the reader to ponder as to what foreseen circumstances may arise from the depth of the caves for this year <em>(this is the peak of my victorian english capacity.. should have read more Shakespere)</em>.</p>
+                        <p class="letter-emphasis">HAPPY BIRTHDAY MY BUBU BEARR.</p>
+                        <p>I love you so much and uhhhh, its so annoying and frustrating that I am not there to celebrate it with you. I just can't wait to be together and just do life together. Wake up next to each other. Cook together. "Clean together" <em>(hehe iyk)</em>. Go on dates. Try new restaurants. TRY ASIANN FOOD THAT WILL CHANGE MY LIFE. Do our cute date setups at home with the tent. Play games. Talk about life. Complain about work. Go grocery shopping together. Go to the beach together. You using me as an unpaid uber driver. The list is as long as your list of "Mistakes VK made". And trust me, I KNOW that list is looooooooooong.</p>
+                        <p>Baby, you truly are the best person I have met. You are perfect in your own way. Your kindness towards everyone, and I litreally mean everyone, is what I love the most about you. You are always willing to help, sometimes even sacrificing your commitments. You are always appreciative of the little things in life and I love how much you care for me. Being with you has shaped me into a better human. Everyday I wake up and I get excited to be better because I want to give you what you deserve.</p>
+                        <p>One memory that I will always remember is of us riding the scooter in Bali. We were driving through the rice fields with the wind breezing past and the sun shining. I could feel the joy radiate through your voice, you seemed so happy at the moment and you felt so free. I can't wait for many more moments like those to come.</p>
+                        <p>To my prestigious lady, I will one day make you mine and we will finally be together. The author wishes you the grandest of birthdays. It is without doubt that when you walk through the garden, all the flowers blossom to get a glimpse of you. Of all those flowers, I shall remain the biggest. idk what I am saying baby, but I hope you get the point I am trying to make — <strong class="letter-shout">I FOKIN LOVEE YOU MY BUBBANIOSSSAAAAA.</strong></p>
+                        <p class="letter-closing">Over and out.</p>
+                        <p class="letter-signature">Sampai Jumpa &nbsp;—&nbsp; Sir VK,<br>lover of Lady Sharon Cahyadi,<br>writes to you in attempt to change your last name one day.</p>
                     </div>
-                    <p class="card-signoff">— Vik</p>
                 </div>
             </div>
         </div>
