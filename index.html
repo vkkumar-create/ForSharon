@@ -1103,14 +1103,24 @@
         /* Personality Cards Section */
         #personalities {
             background-color: #160a20;
-            background-image:
-                radial-gradient(ellipse at 10% 15%, rgba(255, 100, 160, 0.22) 0%, transparent 45%),
-                radial-gradient(ellipse at 90% 85%, rgba(200, 80, 255, 0.18) 0%, transparent 45%),
-                radial-gradient(ellipse at 75% 15%, rgba(255, 180, 220, 0.12) 0%, transparent 35%),
-                radial-gradient(ellipse at 25% 85%, rgba(255, 200, 100, 0.08) 0%, transparent 30%),
-                radial-gradient(ellipse at 50% 50%, rgba(180, 60, 200, 0.1) 0%, transparent 55%),
-                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cg transform='translate(60,55)' opacity='0.13'%3E%3Cellipse rx='5' ry='10' fill='%23ff9ec4' transform='rotate(0) translate(0,-16)'/%3E%3Cellipse rx='5' ry='10' fill='%23ff9ec4' transform='rotate(72) translate(0,-16)'/%3E%3Cellipse rx='5' ry='10' fill='%23ff9ec4' transform='rotate(144) translate(0,-16)'/%3E%3Cellipse rx='5' ry='10' fill='%23ff9ec4' transform='rotate(216) translate(0,-16)'/%3E%3Cellipse rx='5' ry='10' fill='%23ff9ec4' transform='rotate(288) translate(0,-16)'/%3E%3Ccircle r='5' fill='%23ffd0e8'/%3E%3C/g%3E%3Cg transform='translate(15,20)' opacity='0.09'%3E%3Cellipse rx='3' ry='6' fill='%23ffb3d4' transform='rotate(0) translate(0,-10)'/%3E%3Cellipse rx='3' ry='6' fill='%23ffb3d4' transform='rotate(72) translate(0,-10)'/%3E%3Cellipse rx='3' ry='6' fill='%23ffb3d4' transform='rotate(144) translate(0,-10)'/%3E%3Cellipse rx='3' ry='6' fill='%23ffb3d4' transform='rotate(216) translate(0,-10)'/%3E%3Cellipse rx='3' ry='6' fill='%23ffb3d4' transform='rotate(288) translate(0,-10)'/%3E%3Ccircle r='3' fill='%23ffd9eb'/%3E%3C/g%3E%3Cg transform='translate(100,25)' opacity='0.15' fill='%23ffd700'%3E%3Cpolygon points='0,-6 1.5,-2 5.5,-2 2.5,1 3.8,5.5 0,3 -3.8,5.5 -2.5,1 -5.5,-2 -1.5,-2'/%3E%3C/g%3E%3Cg transform='translate(25,100)' opacity='0.12' fill='%23ffaadd'%3E%3Cpolygon points='0,-5 1.2,-1.5 4.5,-1.5 2,1 3,4.5 0,2.5 -3,4.5 -2,1 -4.5,-1.5 -1.2,-1.5'/%3E%3C/g%3E%3C/svg%3E");
+            background-image: url('assets/images/colors-bg.jpg');
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
             position: relative;
+        }
+
+        #personalities::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at center, rgba(0,0,0,0) 40%, rgba(0,0,0,0.3) 100%);
+            pointer-events: none;
+        }
+
+        #personalities > * {
+            position: relative;
+            z-index: 1;
         }
 
         .personality-wrapper {
