@@ -435,6 +435,42 @@
             line-height: 1.55;
         }
 
+        .seal-button-wrap {
+            display: flex;
+            justify-content: center;
+            margin: 1.5rem 0 0.4rem;
+        }
+
+        .seal-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: rgba(253, 246, 227, 0.4);
+            border: 1px solid rgba(180, 140, 50, 0.5);
+            border-radius: 100px;
+            color: #5a3f1a;
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 0.82rem;
+            letter-spacing: 0.18em;
+            padding: 0.5rem 1.2rem;
+            cursor: pointer;
+            transition: all 0.35s ease;
+        }
+
+        .seal-button:hover {
+            background: rgba(180, 140, 50, 0.18);
+            border-color: rgba(180, 140, 50, 0.85);
+            color: #2a1a0a;
+            transform: translateY(-1px);
+        }
+
+        .seal-flourish {
+            color: #b89230;
+            font-size: 0.95rem;
+            line-height: 1;
+        }
+
         .card-greeting {
             font-family: 'Cormorant Garamond', serif;
             font-size: 0.95rem;
@@ -1262,6 +1298,13 @@
                         <p>To my prestigious lady, I will one day make you mine and we will finally be together. The author wishes you the grandest of birthdays. It is without doubt that when you walk through the garden, all the flowers blossom to get a glimpse of you. Of all those flowers, I shall remain the biggest. idk what I am saying baby, but I hope you get the point I am trying to make — <strong class="letter-shout">I FOKIN LOVEE YOU MY BUBBANIOSSSAAAAA.</strong></p>
                         <p class="letter-closing">Over and out.</p>
                         <p class="letter-signature">Sampai Jumpa &nbsp;—&nbsp; Sir VK,<br>lover of Lady Sharon Cahyadi,<br>writes to you in attempt to change your last name one day.</p>
+                        <div class="seal-button-wrap">
+                            <button class="seal-button" type="button" onclick="closeBdayCard()">
+                                <span class="seal-flourish">✿</span>
+                                <span>seal the letter</span>
+                                <span class="seal-flourish">✿</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1375,11 +1418,22 @@
         const pwInput = document.getElementById('passwordInput');
         const pwError = document.getElementById('passwordError');
 
-        bdayCard.addEventListener('click', () => {
+        bdayCard.addEventListener('click', (e) => {
+            // Don't re-trigger when clicking interactive elements inside the open card
             if (bdayCard.classList.contains('opened')) return;
+            if (e.target.closest('.seal-button, .card-letter')) return;
             pwOverlay.classList.add('active');
             setTimeout(() => pwInput.focus(), 350);
         });
+
+        function closeBdayCard() {
+            bdayCard.classList.remove('opened');
+            // Reset scroll so next open starts at the top
+            setTimeout(() => {
+                const letter = document.querySelector('.card-letter');
+                if (letter) letter.scrollTop = 0;
+            }, 1300);
+        }
 
         function checkBdayPassword() {
             if (pwInput.value.toLowerCase().trim() === CARD_PASSWORD) {
