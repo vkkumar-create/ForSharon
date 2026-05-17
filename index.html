@@ -881,45 +881,87 @@
             .scrapbook-title { font-size: 2.5rem; }
         }
 
-        /* Music Player */
+        /* Premium Music Toggle — gold heart */
         #music-player {
             position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            background: white;
-            padding: 1rem;
-            border-radius: 50px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            z-index: 50;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        #music-player:hover {
-            transform: scale(1.1);
+            bottom: 1.6rem;
+            right: 1.6rem;
+            z-index: 150;
+            background: transparent;
+            padding: 0;
         }
 
         .music-toggle {
-            font-size: 1.5rem;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            position: relative;
+            width: 60px;
+            height: 56px;
+            background: transparent;
             border: none;
+            padding: 0;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
-            transition: all 0.3s;
+            transition: transform 0.3s ease;
+            filter: drop-shadow(0 6px 14px rgba(0,0,0,0.4));
         }
 
         .music-toggle:hover {
-            transform: scale(1.1);
+            transform: scale(1.1) translateY(-2px);
+        }
+
+        .music-toggle .heart-bg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            transition: opacity 0.3s ease;
+        }
+
+        .music-toggle .heart-bg path {
+            transition: filter 0.3s ease;
+        }
+
+        .music-toggle .music-symbol {
+            position: relative;
+            z-index: 2;
+            color: #ffffff;
+            font-size: 22px;
+            line-height: 1;
+            text-shadow: 0 1px 3px rgba(120, 80, 10, 0.5);
+            transform: translateY(-2px);
+            pointer-events: none;
+        }
+
+        .music-toggle.muted .heart-bg path {
+            filter: grayscale(0.85) brightness(0.7);
+        }
+
+        .music-toggle.muted .music-symbol {
+            opacity: 0.5;
+        }
+
+        .music-toggle.muted::after {
+            content: '';
+            position: absolute;
+            width: 38px;
+            height: 2.5px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 2px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-30deg);
+            z-index: 3;
+            box-shadow: 0 0 3px rgba(0, 0, 0, 0.4);
+        }
+
+        @keyframes heartBeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.06); }
+        }
+
+        .music-toggle:not(.muted) .heart-bg {
+            animation: heartBeat 1.8s ease-in-out infinite;
         }
 
         /* Confetti */
@@ -1115,9 +1157,6 @@
     </style>
 </head>
 <body>
-    <audio id="bgMusic">
-        <source src="assets/music/background-music.mp3" type="audio/mpeg">
-    </audio>
 
     <nav>
         <a href="#hero">Home</a>
@@ -1309,7 +1348,20 @@
 
     <!-- Music Player -->
     <div id="music-player">
-        <button class="music-toggle" onclick="toggleMusic()">🔊</button>
+        <button class="music-toggle muted" id="musicToggle" onclick="toggleMusic()" aria-label="Toggle music">
+            <svg class="heart-bg" viewBox="0 0 60 56" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="heartGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#f4d05a"/>
+                        <stop offset="55%" stop-color="#d4af37"/>
+                        <stop offset="100%" stop-color="#b8901f"/>
+                    </linearGradient>
+                </defs>
+                <path d="M30,52 C8,35 0,22 8,12 C14,5 22,7 30,16 C38,7 46,5 52,12 C60,22 52,35 30,52 Z"
+                      fill="url(#heartGoldGrad)" stroke="rgba(120, 90, 20, 0.5)" stroke-width="1.5"/>
+            </svg>
+            <span class="music-symbol">♪</span>
+        </button>
     </div>
 
     <script>
@@ -1395,28 +1447,107 @@
         pScene.addEventListener('mouseleave', startPersonalitySpin);
         startPersonalitySpin();
 
-        function toggleMusic() {
-            const audio = document.getElementById('bgMusic');
-            const button = document.querySelector('.music-toggle');
-            
-            if (audio.paused) {
-                audio.play();
-                button.textContent = '🔊';
+        // Section-aware background music with crossfade
+        const sectionTracks = {
+            'hero':           'assets/music/main.mp3',
+            'happybirthday':  'assets/music/main.mp3',
+            'personalities':  'assets/music/main.mp3',
+            // 'messages':    'assets/music/card.mp3',
+            // 'memories':    'assets/music/memories.mp3',
+        };
+
+        const TARGET_VOLUME = 0.45;
+        const FADE_MS = 700;
+
+        const heroAudio = new Audio();
+        heroAudio.loop = true;
+        heroAudio.volume = 0;
+        heroAudio.preload = 'auto';
+
+        let isMuted = true;
+        let currentSectionId = 'hero';
+        let activeTrack = null;
+        let fadeTimer = null;
+
+        function fadeAudio(audio, from, to, duration, onDone) {
+            if (fadeTimer) clearInterval(fadeTimer);
+            const startTime = performance.now();
+            fadeTimer = setInterval(() => {
+                const t = Math.min((performance.now() - startTime) / duration, 1);
+                audio.volume = Math.max(0, Math.min(1, from + (to - from) * t));
+                if (t >= 1) {
+                    clearInterval(fadeTimer);
+                    fadeTimer = null;
+                    if (onDone) onDone();
+                }
+            }, 30);
+        }
+
+        function ensureTrackFor(sectionId) {
+            if (isMuted) return;
+            const desired = sectionTracks[sectionId];
+
+            if (!desired) {
+                // section has no track — fade out
+                if (!heroAudio.paused) {
+                    fadeAudio(heroAudio, heroAudio.volume, 0, FADE_MS, () => heroAudio.pause());
+                }
+                activeTrack = null;
+                return;
+            }
+
+            if (activeTrack === desired && !heroAudio.paused) {
+                // already playing the right thing
+                return;
+            }
+
+            if (activeTrack !== desired) {
+                // switching tracks — fade out, swap, fade in
+                const swap = () => {
+                    heroAudio.src = desired;
+                    activeTrack = desired;
+                    heroAudio.play().then(() => {
+                        fadeAudio(heroAudio, 0, TARGET_VOLUME, FADE_MS);
+                    }).catch(() => {});
+                };
+                if (!heroAudio.paused) {
+                    fadeAudio(heroAudio, heroAudio.volume, 0, FADE_MS, swap);
+                } else {
+                    swap();
+                }
             } else {
-                audio.pause();
-                button.textContent = '🔇';
+                // resuming same track
+                heroAudio.play().then(() => {
+                    fadeAudio(heroAudio, heroAudio.volume, TARGET_VOLUME, FADE_MS);
+                }).catch(() => {});
             }
         }
 
-        // Auto-play music on interaction
-        document.addEventListener('click', function() {
-            const audio = document.getElementById('bgMusic');
-            if (audio.paused) {
-                audio.play().catch(() => {
-                    console.log('Audio playback prevented by browser');
-                });
+        function toggleMusic() {
+            const btn = document.getElementById('musicToggle');
+            isMuted = !isMuted;
+            btn.classList.toggle('muted', isMuted);
+            if (isMuted) {
+                fadeAudio(heroAudio, heroAudio.volume, 0, FADE_MS, () => heroAudio.pause());
+            } else {
+                ensureTrackFor(currentSectionId);
             }
-        }, { once: true });
+        }
+
+        // Detect which section is in view and switch tracks
+        const sectionObserver = new IntersectionObserver((entries) => {
+            // Pick the most-visible section
+            let best = null;
+            entries.forEach(e => {
+                if (!best || e.intersectionRatio > best.intersectionRatio) best = e;
+            });
+            if (best && best.isIntersecting) {
+                currentSectionId = best.target.id;
+                ensureTrackFor(currentSectionId);
+            }
+        }, { threshold: [0.4, 0.6] });
+
+        document.querySelectorAll('section[id]').forEach(s => sectionObserver.observe(s));
 
         // Confetti effect
         function createConfetti() {
