@@ -749,22 +749,22 @@
             object-fit: cover;
         }
 
-        /* Screen position — calibrated to the cinema-bg.jpg */
+        /* Screen position — enlarged to give the video more room */
         .cinema-screen {
             position: absolute;
-            left: 21.2%;
-            top: 6.0%;
-            width: 57.7%;
-            height: 41.0%;
+            left: 17%;
+            top: 3.5%;
+            width: 66%;
+            height: 47%;
             background: #000;
             overflow: hidden;
-            box-shadow: inset 0 0 40px rgba(0,0,0,0.65);
+            box-shadow: inset 0 0 40px rgba(0,0,0,0.7);
         }
 
         .cinema-screen video {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain;
             display: block;
             background: #000;
         }
