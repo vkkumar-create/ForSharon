@@ -722,25 +722,89 @@
 
         .password-error.visible { opacity: 1; }
 
-        /* Memories / Scrapbook Section */
+        /* Memories Section — Private Cinema */
         #memories {
-            background: url('assets/images/beach.jpg') center/cover no-repeat fixed;
-            min-height: auto;
-            display: block;
-            padding: 5rem 2rem;
+            background: #0a0408;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1rem;
             position: relative;
         }
 
-        #memories::before {
-            content: '';
+        .cinema-stage {
+            position: relative;
+            width: 100%;
+            max-width: 1400px;
+            aspect-ratio: 1672 / 941;
+            margin: 0 auto;
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.7);
+        }
+
+        .cinema-bg {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
+        }
+
+        /* Screen position — calibrated to the cinema-bg.jpg */
+        .cinema-screen {
+            position: absolute;
+            left: 21.2%;
+            top: 6.0%;
+            width: 57.7%;
+            height: 41.0%;
+            background: #000;
+            overflow: hidden;
+            box-shadow: inset 0 0 40px rgba(0,0,0,0.65);
+        }
+
+        .cinema-screen video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            background: #000;
+        }
+
+        .cinema-placeholder {
             position: absolute;
             inset: 0;
-            background: rgba(255, 248, 235, 0.55);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            background: radial-gradient(ellipse at center, #1a1620 0%, #06040a 100%);
+            color: rgba(244, 208, 90, 0.85);
+            font-family: 'Cormorant Garamond', serif;
+            text-align: center;
+            padding: 1rem;
         }
 
-        #memories .scrapbook-container {
-            position: relative;
-            z-index: 1;
+        .cinema-placeholder .now-showing {
+            font-size: clamp(0.55rem, 1vw, 0.75rem);
+            letter-spacing: 0.45em;
+            text-transform: uppercase;
+            color: rgba(244, 208, 90, 0.55);
+        }
+
+        .cinema-placeholder .feature-title {
+            font-size: clamp(1.1rem, 2.6vw, 2.2rem);
+            font-style: italic;
+            color: #f4d05a;
+            line-height: 1.1;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.35);
+        }
+
+        .cinema-placeholder .subtitle {
+            font-size: clamp(0.55rem, 0.85vw, 0.7rem);
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.4);
+            margin-top: 0.5rem;
         }
 
         .scrapbook-container {
@@ -1323,69 +1387,22 @@
         </div>
     </div>
 
-    <!-- Memories Section -->
+    <!-- Memories Section — Private Cinema -->
     <section id="memories">
-        <div class="scrapbook-container">
-            <h2 class="scrapbook-title">🌟 Our Story</h2>
-
-            <div class="scrapbook-board">
-
-                <!-- Row 1 -->
-                <div class="scrapbook-card size-lg r-n3" style="top:50px; left:10px; z-index:2;">
-                    <div class="photo-slot">
-                        <img src="assets/memories/memory1.jpg" alt="Memory 1">
-                    </div>
-                    <p class="scrapbook-caption">Caption for photo 1!</p>
+        <div class="cinema-stage">
+            <img class="cinema-bg" src="assets/images/cinema-bg.jpg" alt="Private cinema" loading="lazy" decoding="async">
+            <div class="cinema-screen" id="cinemaScreen">
+                <!-- When sharon-video.mp4 is uploaded, swap the placeholder for:
+                     <video controls playsinline preload="metadata" poster="">
+                         <source src="assets/videos/sharon-video.mp4" type="video/mp4">
+                     </video>
+                -->
+                <div class="cinema-placeholder">
+                    <span class="now-showing">— Now Showing —</span>
+                    <span class="feature-title">A Letter to Sharon</span>
+                    <span class="subtitle">presenting soon</span>
                 </div>
-
-                <div class="scrapbook-textbox r-p2" style="top:20px; left:355px; z-index:3;">
-                    <p>Write your first note here. Something sweet about Sharon — a favourite memory, a moment that made you laugh, or just how much she means to you.</p>
-                </div>
-
-                <div class="scrapbook-card size-md r-n2" style="top:35px; left:595px; z-index:2;">
-                    <div class="photo-slot">
-                        <img src="assets/memories/memory2.jpg" alt="Memory 2">
-                    </div>
-                    <p class="scrapbook-caption">Caption for photo 2!</p>
-                </div>
-
-                <!-- Row 2 -->
-                <div class="scrapbook-card size-sm r-p4" style="top:375px; left:5px; z-index:2;">
-                    <div class="photo-slot">
-                        <img src="assets/memories/memory3.jpg" alt="Memory 3">
-                    </div>
-                    <p class="scrapbook-caption">Caption for photo 3!</p>
-                </div>
-
-                <div class="scrapbook-card size-lg r-n1" style="top:330px; left:230px; z-index:4;">
-                    <div class="photo-slot">
-                        <img src="assets/memories/memory4.jpg" alt="Memory 4">
-                    </div>
-                    <p class="scrapbook-caption">Caption for photo 4!</p>
-                </div>
-
-                <div class="scrapbook-textbox r-n3" style="top:350px; left:720px; z-index:3;">
-                    <p>Write your second note here. Maybe a funny inside joke, or a little reminder of why you love her so much.</p>
-                </div>
-
-                <!-- Row 3 -->
-                <div class="scrapbook-card size-md r-p2" style="top:680px; left:50px; z-index:3;">
-                    <div class="photo-slot">
-                        <img src="assets/memories/memory5.jpg" alt="Memory 5">
-                    </div>
-                    <p class="scrapbook-caption">Caption for photo 5!</p>
-                </div>
-
-                <div class="scrapbook-card size-md r-n2" style="top:700px; left:390px; z-index:2;">
-                    <div class="photo-slot">
-                        <img src="assets/memories/memory6.jpg" alt="Memory 6">
-                    </div>
-                    <p class="scrapbook-caption">Caption for photo 6!</p>
-                </div>
-
             </div>
-
-            <p class="scrapbook-footer">❤️ Forever yours ❤️</p>
         </div>
     </section>
 
